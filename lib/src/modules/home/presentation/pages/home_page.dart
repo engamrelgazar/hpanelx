@@ -6,6 +6,7 @@ import 'package:hpanelx/src/modules/home/presentation/bloc/home_bloc.dart';
 import 'package:hpanelx/src/modules/home/presentation/widgets/shimmer_loading.dart';
 import 'package:hpanelx/src/modules/startup/presentation/bloc/startup_bloc.dart';
 import 'package:hpanelx/src/core/utils/utils.dart';
+import 'package:hpanelx/src/modules/home/presentation/widgets/about_bottom_sheet.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -281,9 +282,80 @@ class _HomePageState extends State<HomePage> {
                     },
                   ),
 
-                  // Logout button at the bottom
+                  // About and Logout buttons at the bottom
                   SizedBox(height: ResponsiveHelper.h(52, context)),
 
+                  // About button
+                  Card(
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                        ResponsiveHelper.r(16, context),
+                      ),
+                    ),
+                    child: InkWell(
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          builder: (context) => const AboutBottomSheet(),
+                        );
+                      },
+                      borderRadius: BorderRadius.circular(
+                        ResponsiveHelper.r(16, context),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.all(ResponsiveHelper.w(5, context)),
+                        child: Row(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(
+                                ResponsiveHelper.w(8, context),
+                              ),
+                              decoration: BoxDecoration(
+                                color: Theme.of(context)
+                                    .primaryColor
+                                    .withAlpha(26),
+                                borderRadius: BorderRadius.circular(
+                                  ResponsiveHelper.r(12, context),
+                                ),
+                              ),
+                              child: Icon(
+                                Icons.info_outline_rounded,
+                                color: Theme.of(context).primaryColor,
+                                size: ResponsiveHelper.sp(28, context),
+                              ),
+                            ),
+                            SizedBox(width: ResponsiveHelper.w(16, context)),
+                            Expanded(
+                              child: Text(
+                                'About',
+                                style: TextStyle(
+                                  fontSize: ResponsiveHelper.sp(16, context),
+                                  fontWeight: FontWeight.w500,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              color:
+                                  Theme.of(context).primaryColor.withAlpha(200),
+                              size: ResponsiveHelper.sp(
+                                isTablet ? 18 : 16,
+                                context,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(height: ResponsiveHelper.h(12, context)),
+
+                  // Logout button
                   Card(
                     elevation: 0,
                     shape: RoundedRectangleBorder(
@@ -351,8 +423,7 @@ class _HomePageState extends State<HomePage> {
 
   // Widget for loading state
   Widget _buildLoadingStats(bool isTablet, double width) {
-    // For very small screens (width < 360), use a single column
-    final isVerySmallScreen = MediaQuery.of(context).size.width < 360;
+    final isVerySmallScreen = MediaQuery.of(context).size.width < 400;
 
     return GridView.count(
       crossAxisCount: isVerySmallScreen ? 1 : 2,
@@ -461,7 +532,7 @@ class _HomePageState extends State<HomePage> {
 
     return GridView.count(
       crossAxisCount: isVerySmallScreen ? 1 : 2,
-      childAspectRatio: isTablet ? 6.0 : 5.0,
+      childAspectRatio: isTablet ? 6.0 : 3.5,
       mainAxisSpacing: ResponsiveHelper.h(12, context),
       crossAxisSpacing: ResponsiveHelper.w(12, context),
       shrinkWrap: true,
@@ -489,66 +560,65 @@ class _HomePageState extends State<HomePage> {
   void _showLogoutConfirmation(BuildContext context, bool isTablet) {
     showDialog(
       context: context,
-      builder:
-          (context) => AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(
-                ResponsiveHelper.r(16, context),
-              ),
-            ),
-            title: Text(
-              'Logout Confirmation',
-              style: TextStyle(
-                fontSize: ResponsiveHelper.sp(isTablet ? 20 : 18, context),
-                fontWeight: FontWeight.bold,
-                color: AppTheme.darkColor,
-              ),
-            ),
-            content: Text(
-              'Are you sure you want to logout?',
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(
+            ResponsiveHelper.r(16, context),
+          ),
+        ),
+        title: Text(
+          'Logout Confirmation',
+          style: TextStyle(
+            fontSize: ResponsiveHelper.sp(isTablet ? 20 : 18, context),
+            fontWeight: FontWeight.bold,
+            color: AppTheme.darkColor,
+          ),
+        ),
+        content: Text(
+          'Are you sure you want to logout?',
+          style: TextStyle(
+            fontSize: ResponsiveHelper.sp(isTablet ? 16 : 14, context),
+            color: Colors.grey[700],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(
+              'Cancel',
               style: TextStyle(
                 fontSize: ResponsiveHelper.sp(isTablet ? 16 : 14, context),
                 color: Colors.grey[700],
               ),
             ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: Text(
-                  'Cancel',
-                  style: TextStyle(
-                    fontSize: ResponsiveHelper.sp(isTablet ? 16 : 14, context),
-                    color: Colors.grey[700],
-                  ),
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  context.read<StartupBloc>().add(LogoutEvent());
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppTheme.errorColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                      ResponsiveHelper.r(8, context),
-                    ),
-                  ),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: ResponsiveHelper.w(16, context),
-                    vertical: ResponsiveHelper.h(8, context),
-                  ),
-                ),
-                child: Text(
-                  'Logout',
-                  style: TextStyle(
-                    fontSize: ResponsiveHelper.sp(14, context),
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ],
           ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              context.read<StartupBloc>().add(LogoutEvent());
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppTheme.errorColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(
+                  ResponsiveHelper.r(8, context),
+                ),
+              ),
+              padding: EdgeInsets.symmetric(
+                horizontal: ResponsiveHelper.w(16, context),
+                vertical: ResponsiveHelper.h(8, context),
+              ),
+            ),
+            child: Text(
+              'Logout',
+              style: TextStyle(
+                fontSize: ResponsiveHelper.sp(14, context),
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -589,7 +659,7 @@ class _HomePageState extends State<HomePage> {
                   color: color,
                   size: ResponsiveHelper.responsiveIconSize(
                     context,
-                    isTablet ? 16 : 14,
+                    isTablet ? 50 : 40,
                   ),
                 ),
               ),
@@ -603,7 +673,7 @@ class _HomePageState extends State<HomePage> {
                       title,
                       style: TextStyle(
                         fontSize: ResponsiveHelper.sp(
-                          isTablet ? 13 : 12,
+                          isTablet ? 20 : 17,
                           context,
                         ),
                         fontWeight: FontWeight.bold,
@@ -616,7 +686,7 @@ class _HomePageState extends State<HomePage> {
                       description,
                       style: TextStyle(
                         fontSize: ResponsiveHelper.sp(
-                          isTablet ? 11 : 10,
+                          isTablet ? 14 : 12,
                           context,
                         ),
                         color: Colors.grey[600],
@@ -677,7 +747,7 @@ class _HomePageState extends State<HomePage> {
                   color: color,
                   size: ResponsiveHelper.responsiveIconSize(
                     context,
-                    isTablet ? 16 : 14,
+                    25,
                   ),
                 ),
               ),
@@ -691,7 +761,7 @@ class _HomePageState extends State<HomePage> {
                       title,
                       style: TextStyle(
                         fontSize: ResponsiveHelper.sp(
-                          isTablet ? 11 : 10,
+                          12,
                           context,
                         ),
                         color: Colors.grey[600],

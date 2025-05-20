@@ -5,21 +5,37 @@ class ResponsiveHelper {
   static const double designWidth = 390;
   static const double designHeight = 844;
 
+  // Store screen size to avoid multiple MediaQuery calls
+  static Size? _cachedScreenSize;
+
+  // Get screen size efficiently
+  static Size getScreenSize(BuildContext context) {
+    if (_cachedScreenSize == null) {
+      _cachedScreenSize = MediaQuery.of(context).size;
+    }
+    return _cachedScreenSize!;
+  }
+
+  // Reset cached size (should be called when orientation changes)
+  static void resetCachedSize() {
+    _cachedScreenSize = null;
+  }
+
   static bool isMobile(BuildContext context) =>
-      MediaQuery.of(context).size.width < 600;
+      getScreenSize(context).width < 600;
 
   static bool isTablet(BuildContext context) =>
-      MediaQuery.of(context).size.width >= 600 &&
-      MediaQuery.of(context).size.width < 1200;
+      getScreenSize(context).width >= 600 &&
+      getScreenSize(context).width < 1200;
 
   static bool isDesktop(BuildContext context) =>
-      MediaQuery.of(context).size.width >= 1200;
+      getScreenSize(context).width >= 1200;
 
   static double getScreenWidth(BuildContext context) =>
-      MediaQuery.of(context).size.width;
+      getScreenSize(context).width;
 
   static double getScreenHeight(BuildContext context) =>
-      MediaQuery.of(context).size.height;
+      getScreenSize(context).height;
 
   static Widget responsiveBuilder({
     required BuildContext context,
@@ -109,10 +125,9 @@ class ResponsiveHelper {
   }
 
   static double r(double radius, BuildContext context) {
-    double scale =
-        isMobile(context)
-            ? 1
-            : isTablet(context)
+    double scale = isMobile(context)
+        ? 1
+        : isTablet(context)
             ? 1.1
             : 1.2;
     return radius * scale;
@@ -130,13 +145,15 @@ class ResponsiveBuilder extends StatelessWidget {
     bool isMobile,
     bool isTablet,
     bool isDesktop,
-  )
-  builder;
+  ) builder;
 
   const ResponsiveBuilder({super.key, required this.builder});
 
   @override
   Widget build(BuildContext context) {
+    // Reset cached size on each build to ensure we have the latest values
+    ResponsiveHelper.resetCachedSize();
+
     final isMobile = ResponsiveHelper.isMobile(context);
     final isTablet = ResponsiveHelper.isTablet(context);
     final isDesktop = ResponsiveHelper.isDesktop(context);
@@ -153,6 +170,8 @@ class ResponsiveWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Reset cached size to ensure we have the latest values
+    ResponsiveHelper.resetCachedSize();
     // This widget doesn't actually do any initialization like ScreenUtilInit did
     // Instead, we rely on MediaQuery in the ResponsiveHelper methods
     return child;

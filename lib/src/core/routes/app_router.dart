@@ -1,6 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hpanelx/src/core/di/injection_container.dart';
+import 'package:hpanelx/src/core/di/injection_container.dart' as di;
 import 'package:hpanelx/src/core/middleware/auth_middleware.dart';
 import 'package:hpanelx/src/modules/startup/presentation/pages/splash_screen.dart';
 import 'package:hpanelx/src/modules/startup/presentation/pages/token_input_page.dart';
@@ -43,7 +43,7 @@ class AppRouterImpl implements AppRouter {
         path: '/domains',
         builder:
             (context, state) => BlocProvider<DomainsBloc>(
-              create: (context) => sl<DomainsBloc>(),
+              create: (context) => di.sl<DomainsBloc>(),
               child: const DomainsPage(),
             ),
       ),
@@ -51,7 +51,7 @@ class AppRouterImpl implements AppRouter {
         path: '/vms',
         builder:
             (context, state) => BlocProvider<VmsCubit>(
-              create: (context) => sl<VmsCubit>(),
+              create: (context) => di.sl<VmsCubit>(),
               child: const VmsPage(),
             ),
       ),
@@ -59,7 +59,7 @@ class AppRouterImpl implements AppRouter {
         path: '/billing/subscriptions',
         builder:
             (context, state) => BlocProvider<BillingCubit>(
-              create: (context) => sl<BillingCubit>(),
+              create: (context) => di.sl<BillingCubit>(),
               child: const SubscriptionsPage(),
             ),
       ),

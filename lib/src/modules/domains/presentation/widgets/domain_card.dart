@@ -11,22 +11,18 @@ class DomainCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double fontSize =
-        isTablet
-            ? ResponsiveHelper.sp(16, context)
-            : ResponsiveHelper.sp(14, context);
-    final double titleSize =
-        isTablet
-            ? ResponsiveHelper.sp(18, context)
-            : ResponsiveHelper.sp(16, context);
-    final double iconSize =
-        isTablet
-            ? ResponsiveHelper.sp(22, context)
-            : ResponsiveHelper.sp(20, context);
-    final double padding =
-        isTablet
-            ? ResponsiveHelper.w(20, context)
-            : ResponsiveHelper.w(16, context);
+    final double fontSize = isTablet
+        ? ResponsiveHelper.sp(16, context)
+        : ResponsiveHelper.sp(14, context);
+    final double titleSize = isTablet
+        ? ResponsiveHelper.sp(18, context)
+        : ResponsiveHelper.sp(16, context);
+    final double iconSize = isTablet
+        ? ResponsiveHelper.sp(22, context)
+        : ResponsiveHelper.sp(20, context);
+    final double padding = isTablet
+        ? ResponsiveHelper.w(20, context)
+        : ResponsiveHelper.w(16, context);
 
     Color statusColor;
     IconData statusIcon;
@@ -44,10 +40,9 @@ class DomainCard extends StatelessWidget {
     }
 
     // Calculate expiry status
-    final expiryColor =
-        domain.daysUntilExpiry < 30
-            ? Colors.orange
-            : domain.daysUntilExpiry < 0
+    final expiryColor = domain.daysUntilExpiry < 30
+        ? Colors.orange
+        : domain.daysUntilExpiry < 0
             ? Colors.red
             : Colors.green;
 
@@ -82,8 +77,7 @@ class DomainCard extends StatelessWidget {
                     vertical: ResponsiveHelper.h(4, context),
                   ),
                   decoration: BoxDecoration(
-                    // ignore: deprecated_member_use
-                    color: statusColor.withOpacity(0.1),
+                    color: statusColor.withAlpha(26), // 0.1 opacity = 26 alpha
                     borderRadius: BorderRadius.circular(
                       ResponsiveHelper.r(8, context),
                     ),

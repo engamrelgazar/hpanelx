@@ -37,7 +37,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       },
       (token) async {
         if (token == null || token.isEmpty) {
-          emit(HomeError(message: 'No authentication token found'));
+          emit(const HomeError(message: 'No authentication token found'));
           return;
         }
 

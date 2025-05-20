@@ -16,12 +16,6 @@ class ApiClient {
       'Accept': 'application/json',
     };
 
-    // Log interceptor
-    _dio.interceptors.add(
-      LogInterceptor(requestBody: true, responseBody: true, error: true),
-    );
-
-    // Auth interceptor - automatically adds token to each request
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
@@ -64,7 +58,9 @@ class ApiClient {
       );
       return response.data;
     } on DioException catch (e) {
-      _handleError(e);
+      throw _handleError(e);
+    } catch (e) {
+      throw Exception('Unexpected error: ${e.toString()}');
     }
   }
 
@@ -82,7 +78,9 @@ class ApiClient {
       );
       return response.data;
     } on DioException catch (e) {
-      _handleError(e);
+      throw _handleError(e);
+    } catch (e) {
+      throw Exception('Unexpected error: ${e.toString()}');
     }
   }
 
@@ -100,7 +98,9 @@ class ApiClient {
       );
       return response.data;
     } on DioException catch (e) {
-      _handleError(e);
+      throw _handleError(e);
+    } catch (e) {
+      throw Exception('Unexpected error: ${e.toString()}');
     }
   }
 
@@ -118,33 +118,52 @@ class ApiClient {
       );
       return response.data;
     } on DioException catch (e) {
-      _handleError(e);
+      throw _handleError(e);
+    } catch (e) {
+      throw Exception('Unexpected error: ${e.toString()}');
     }
   }
 
   // Error handling
-  dynamic _handleError(DioException error) {
+  Exception _handleError(DioException error) {
     switch (error.type) {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:
       case DioExceptionType.receiveTimeout:
-        throw Exception('Connection timed out');
+        return Exception(
+            'Connection timed out. Please check your internet connection and try again.');
       case DioExceptionType.badResponse:
         final statusCode = error.response?.statusCode;
         final data = error.response?.data;
-        if (statusCode == 401) {
-          throw Exception('Unauthorized');
-        } else if (statusCode == 404) {
-          throw Exception('Resource not found');
+        String message;
+
+        if (data != null &&
+            data is Map<String, dynamic> &&
+            data.containsKey('message')) {
+          message = data['message'];
         } else {
-          throw Exception('Server error: ${data['message'] ?? error.message}');
+          message = error.message ?? 'Server error';
+        }
+
+        if (statusCode == 401) {
+          return Exception(
+              'Unauthorized. Please check your API token and try again.');
+        } else if (statusCode == 404) {
+          return Exception(
+              'Resource not found. Please verify your request and try again.');
+        } else if (statusCode == 500) {
+          return Exception(
+              'Server error. Please try again later or contact support.');
+        } else {
+          return Exception('Server error: $message');
         }
       case DioExceptionType.cancel:
-        throw Exception('Request cancelled');
+        return Exception('Request cancelled');
       case DioExceptionType.connectionError:
-        throw Exception('No internet connection');
+        return Exception(
+            'No internet connection. Please check your connection and try again.');
       default:
-        throw Exception('Network error: ${error.message}');
+        return Exception('Network error: ${error.message ?? "Unknown error"}');
     }
   }
 }

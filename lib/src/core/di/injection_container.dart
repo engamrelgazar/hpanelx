@@ -1,3 +1,7 @@
+// Export the GetIt instance
+export 'package:get_it/get_it.dart';
+export 'injection_container.dart' show sl;
+
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
