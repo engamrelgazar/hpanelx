@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:hpanelx/src/core/api/api_constants.dart';
 import 'package:hpanelx/src/core/error/exceptions.dart';
+import 'dart:io'; // Add this import for InternetAddress
 
 /// A client for making API requests with proper error handling and authentication.
 class ApiClient {
@@ -109,7 +110,7 @@ class ApiClient {
       );
       return response.data;
     } on DioException catch (e) {
-      throw _handleError(e);
+      throw await _handleError(e);
     } catch (e) {
       throw UnexpectedException('Unexpected error: ${e.toString()}');
     }
@@ -133,7 +134,7 @@ class ApiClient {
       );
       return response.data;
     } on DioException catch (e) {
-      throw _handleError(e);
+      throw await _handleError(e);
     } catch (e) {
       throw UnexpectedException('Unexpected error: ${e.toString()}');
     }
@@ -157,7 +158,7 @@ class ApiClient {
       );
       return response.data;
     } on DioException catch (e) {
-      throw _handleError(e);
+      throw await _handleError(e);
     } catch (e) {
       throw UnexpectedException('Unexpected error: ${e.toString()}');
     }
@@ -181,20 +182,35 @@ class ApiClient {
       );
       return response.data;
     } on DioException catch (e) {
-      throw _handleError(e);
+      throw await _handleError(e);
     } catch (e) {
       throw UnexpectedException('Unexpected error: ${e.toString()}');
     }
   }
 
+  /// Checks if the device has internet connectivity
+  Future<bool> _hasInternetConnection() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
+    } on SocketException catch (_) {
+      return false;
+    }
+  }
+
   /// Handles and translates Dio errors into application-specific exceptions
-  Exception _handleError(DioException error) {
+  Future<Exception> _handleError(DioException error) async {
     switch (error.type) {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:
       case DioExceptionType.receiveTimeout:
+        final hasInternet = await _hasInternetConnection();
+        if (!hasInternet) {
+          return NetworkException(
+              'No internet connection. Please check your connection and try again.');
+        }
         return TimeoutException(
-            'Connection timed out. Please check your internet connection and try again.');
+            'Connection timed out. The server may be unavailable. Please try again later.');
       case DioExceptionType.badResponse:
         final statusCode = error.response?.statusCode;
         final data = error.response?.data;
@@ -223,8 +239,13 @@ class ApiClient {
       case DioExceptionType.cancel:
         return CancellationException('Request cancelled');
       case DioExceptionType.connectionError:
-        return NetworkException(
-            'No internet connection. Please check your connection and try again.');
+        final hasInternet = await _hasInternetConnection();
+        if (!hasInternet) {
+          return NetworkException(
+              'No internet connection. Please check your connection and try again.');
+        }
+        return ServerException(
+            'Unable to connect to the server. The server may be down or unreachable. Please try again later.');
       default:
         return UnexpectedException(
             'Network error: ${error.message ?? "Unknown error"}');

@@ -2,20 +2,16 @@ import 'package:flutter/foundation.dart';
 
 /// Environment configurations
 enum Environment {
-  development,
-  staging,
   production,
 }
 
 /// Constants for API endpoints and configuration
 class ApiConstants {
   // Current environment
-  static Environment environment = Environment.development;
+  static Environment environment = Environment.production;
 
   // Base URLs for different environments
   static const Map<Environment, String> _baseUrls = {
-    Environment.development: 'https://dev.api.hostinger.com',
-    Environment.staging: 'https://staging.api.hostinger.com',
     Environment.production: 'https://developers.hostinger.com',
   };
 

@@ -29,20 +29,8 @@ Future<void> main() async {
 
 /// Configure the app environment (can be expanded with build flags)
 void _configureEnvironment() {
-  final appInfo = AppInfo();
-
-  // Set API environment based on app environment
-  switch (appInfo.environment) {
-    case BuildEnvironment.production:
-      ApiConstants.setEnvironment(Environment.production);
-      break;
-    case BuildEnvironment.staging:
-      ApiConstants.setEnvironment(Environment.staging);
-      break;
-    case BuildEnvironment.development:
-      ApiConstants.setEnvironment(Environment.development);
-      break;
-  }
+  // Always use production environment
+  ApiConstants.setEnvironment(Environment.production);
 }
 
 /// Configure the system UI (status bar, navigation bar)

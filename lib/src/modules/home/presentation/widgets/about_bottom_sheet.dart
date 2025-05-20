@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AboutBottomSheet extends StatelessWidget {
   const AboutBottomSheet({super.key});
@@ -82,7 +83,7 @@ class AboutBottomSheet extends StatelessWidget {
             const SizedBox(height: 16),
             // Developer Name
             Text(
-              'Your Name',
+              'Amr Elgazar',
               style: Theme.of(
                 context,
               ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
@@ -94,25 +95,24 @@ class AboutBottomSheet extends StatelessWidget {
               children: [
                 _SocialButton(
                   icon: Icons.language,
-                  onPressed: () => _launchURL('https://yourwebsite.com'),
+                  onPressed: () => _launchURL('https://amrelgazar.com'),
                 ),
                 const SizedBox(width: 16),
                 _SocialButton(
                   icon: Icons.facebook,
                   onPressed: () =>
-                      _launchURL('https://facebook.com/yourusername'),
+                      _launchURL('https://www.facebook.com/elgazarTech/'),
                 ),
                 const SizedBox(width: 16),
                 _SocialButton(
                   icon: Icons.link,
-                  onPressed: () =>
-                      _launchURL('https://linkedin.com/in/yourusername'),
+                  onPressed: () => _launchURL(
+                      'https://www.linkedin.com/in/amr-ahmed-elgazar/'),
                 ),
                 const SizedBox(width: 16),
                 _SocialButton(
-                  icon: Icons.code,
-                  onPressed: () =>
-                      _launchURL('https://github.com/yourusername'),
+                  icon: FontAwesomeIcons.whatsapp,
+                  onPressed: () => _launchURL('http://wa.me/201030691425'),
                 ),
               ],
             ),
