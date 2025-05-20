@@ -10,9 +10,7 @@ class ResponsiveHelper {
 
   // Get screen size efficiently
   static Size getScreenSize(BuildContext context) {
-    if (_cachedScreenSize == null) {
-      _cachedScreenSize = MediaQuery.of(context).size;
-    }
+    _cachedScreenSize ??= MediaQuery.of(context).size;
     return _cachedScreenSize!;
   }
 
