@@ -1,40 +1,59 @@
 import 'package:flutter/material.dart';
 
+/// A utility class that provides methods for responsive design in Flutter applications.
+///
+/// This helper class includes methods for determining device types (mobile, tablet, desktop),
+/// calculating responsive dimensions, and providing responsive widgets and values.
 class ResponsiveHelper {
   // Design sizes based on iPhone 13 Pro dimensions
   static const double designWidth = 390;
   static const double designHeight = 844;
 
+  // Breakpoints for different device types
+  static const double mobileBreakpoint = 600;
+  static const double tabletBreakpoint = 1200;
+
   // Store screen size to avoid multiple MediaQuery calls
   static Size? _cachedScreenSize;
+  static BuildContext? _cachedContext;
 
-  // Get screen size efficiently
+  /// Gets the screen size efficiently, using cached value if context hasn't changed
   static Size getScreenSize(BuildContext context) {
-    _cachedScreenSize ??= MediaQuery.of(context).size;
+    if (_cachedContext != context) {
+      _cachedScreenSize = MediaQuery.of(context).size;
+      _cachedContext = context;
+    }
     return _cachedScreenSize!;
   }
 
-  // Reset cached size (should be called when orientation changes)
+  /// Resets cached size (should be called when orientation changes)
   static void resetCachedSize() {
     _cachedScreenSize = null;
+    _cachedContext = null;
   }
 
+  /// Checks if the device is a mobile device based on screen width
   static bool isMobile(BuildContext context) =>
-      getScreenSize(context).width < 600;
+      getScreenSize(context).width < mobileBreakpoint;
 
+  /// Checks if the device is a tablet based on screen width
   static bool isTablet(BuildContext context) =>
-      getScreenSize(context).width >= 600 &&
-      getScreenSize(context).width < 1200;
+      getScreenSize(context).width >= mobileBreakpoint &&
+      getScreenSize(context).width < tabletBreakpoint;
 
+  /// Checks if the device is a desktop based on screen width
   static bool isDesktop(BuildContext context) =>
-      getScreenSize(context).width >= 1200;
+      getScreenSize(context).width >= tabletBreakpoint;
 
+  /// Gets the screen width
   static double getScreenWidth(BuildContext context) =>
       getScreenSize(context).width;
 
+  /// Gets the screen height
   static double getScreenHeight(BuildContext context) =>
       getScreenSize(context).height;
 
+  /// A builder widget that returns different widgets based on screen size
   static Widget responsiveBuilder({
     required BuildContext context,
     required Widget mobile,
@@ -50,7 +69,7 @@ class ResponsiveHelper {
     }
   }
 
-  // Get responsive value based on screen size
+  /// Returns a responsive value based on screen size
   static T responsiveValue<T>({
     required BuildContext context,
     required T mobile,
@@ -66,7 +85,7 @@ class ResponsiveHelper {
     }
   }
 
-  // Get responsive padding
+  /// Returns responsive padding based on screen size
   static EdgeInsets responsivePadding(BuildContext context) {
     if (isDesktop(context)) {
       return EdgeInsets.symmetric(
@@ -80,7 +99,18 @@ class ResponsiveHelper {
     }
   }
 
-  // Get responsive spacing
+  /// Returns responsive margin based on screen size
+  static EdgeInsets responsiveMargin(BuildContext context) {
+    if (isDesktop(context)) {
+      return const EdgeInsets.symmetric(horizontal: 32, vertical: 24);
+    } else if (isTablet(context)) {
+      return const EdgeInsets.symmetric(horizontal: 24, vertical: 16);
+    } else {
+      return const EdgeInsets.symmetric(horizontal: 16, vertical: 12);
+    }
+  }
+
+  /// Returns responsive spacing based on screen size
   static double responsiveSpacing(BuildContext context) {
     if (isDesktop(context)) {
       return 24;
@@ -91,7 +121,7 @@ class ResponsiveHelper {
     }
   }
 
-  // Get responsive font size
+  /// Returns responsive font size based on screen size
   static double responsiveFontSize(BuildContext context, double baseFontSize) {
     if (isDesktop(context)) {
       return baseFontSize * 1.2;
@@ -102,7 +132,7 @@ class ResponsiveHelper {
     }
   }
 
-  // Get responsive icon size
+  /// Returns responsive icon size based on screen size
   static double responsiveIconSize(BuildContext context, double baseIconSize) {
     if (isDesktop(context)) {
       return baseIconSize * 1.3;
@@ -113,15 +143,17 @@ class ResponsiveHelper {
     }
   }
 
-  // Convert ScreenUtil dimensions to responsive dimensions
+  /// Calculates width based on design width (similar to ScreenUtil)
   static double w(double width, BuildContext context) {
     return width * getScreenWidth(context) / designWidth;
   }
 
+  /// Calculates height based on design height (similar to ScreenUtil)
   static double h(double height, BuildContext context) {
     return height * getScreenHeight(context) / designHeight;
   }
 
+  /// Calculates responsive radius
   static double r(double radius, BuildContext context) {
     double scale = isMobile(context)
         ? 1
@@ -131,13 +163,15 @@ class ResponsiveHelper {
     return radius * scale;
   }
 
+  /// Calculates responsive font size (similar to ScreenUtil's sp)
   static double sp(double fontSize, BuildContext context) {
     return responsiveFontSize(context, fontSize);
   }
 }
 
-// A widget that makes building responsive UIs easier
+/// A widget that makes building responsive UIs easier
 class ResponsiveBuilder extends StatelessWidget {
+  /// Function that builds widget based on screen size information
   final Widget Function(
     BuildContext context,
     bool isMobile,
@@ -145,6 +179,7 @@ class ResponsiveBuilder extends StatelessWidget {
     bool isDesktop,
   ) builder;
 
+  /// Creates a new [ResponsiveBuilder] widget
   const ResponsiveBuilder({super.key, required this.builder});
 
   @override
@@ -160,10 +195,12 @@ class ResponsiveBuilder extends StatelessWidget {
   }
 }
 
-// A widget that replaces ScreenUtilInit
+/// A widget that replaces ScreenUtilInit for responsive design
 class ResponsiveWrapper extends StatelessWidget {
+  /// The child widget to be wrapped
   final Widget child;
 
+  /// Creates a new [ResponsiveWrapper] widget
   const ResponsiveWrapper({super.key, required this.child});
 
   @override

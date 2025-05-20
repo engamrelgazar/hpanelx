@@ -32,7 +32,7 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   Future<void> saveToken(String token) async {
     final success = await sharedPreferences.setString(tokenKey, token);
     if (!success) {
-      throw CacheException(message: 'Failed to save token');
+      throw CacheException('Failed to save token');
     }
   }
 
@@ -40,7 +40,7 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   Future<void> removeToken() async {
     final success = await sharedPreferences.remove(tokenKey);
     if (!success) {
-      throw CacheException(message: 'Failed to remove token');
+      throw CacheException( 'Failed to remove token');
     }
   }
 }

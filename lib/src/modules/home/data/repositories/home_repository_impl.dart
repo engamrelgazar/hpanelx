@@ -17,7 +17,7 @@ class HomeRepositoryImpl implements HomeRepository {
       final servers = await remoteDataSource.getServers();
       return Right(servers);
     } on ServerException catch (e) {
-      return Left(ServerFailure(message: e.message, statusCode: e.statusCode));
+      return Left(ServerFailure(message: e.message));
     } on UnauthorizedException catch (e) {
       return Left(UnauthorizedFailure(message: e.message));
     } catch (e) {
@@ -31,7 +31,7 @@ class HomeRepositoryImpl implements HomeRepository {
       final domains = await remoteDataSource.getDomains();
       return Right(domains);
     } on ServerException catch (e) {
-      return Left(ServerFailure(message: e.message, statusCode: e.statusCode));
+      return Left(ServerFailure(message: e.message));
     } on UnauthorizedException catch (e) {
       return Left(UnauthorizedFailure(message: e.message));
     } catch (e) {

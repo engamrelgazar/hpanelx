@@ -2,16 +2,15 @@ import 'package:equatable/equatable.dart';
 
 abstract class Failure extends Equatable {
   final String message;
-  final int? statusCode;
 
-  const Failure({required this.message, this.statusCode});
+  const Failure({required this.message,});
 
   @override
-  List<Object?> get props => [message, statusCode];
+  List<Object?> get props => [message];
 }
 
 class ServerFailure extends Failure {
-  const ServerFailure({required super.message, super.statusCode});
+  const ServerFailure({required super.message});
 }
 
 class ConnectionFailure extends Failure {
@@ -23,5 +22,5 @@ class CacheFailure extends Failure {
 }
 
 class UnauthorizedFailure extends Failure {
-  const UnauthorizedFailure({required super.message}) : super(statusCode: 401);
+  const UnauthorizedFailure({required super.message});
 }

@@ -29,11 +29,11 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
         return serverData.map((json) => ServerModel.fromJson(json)).toList();
       } else {
         throw ServerException(
-          message: 'Failed to load servers: No data returned',
+        'Failed to load servers: No data returned',
         );
       }
     } catch (e) {
-      throw ServerException(message: 'Failed to load servers: $e');
+      throw ServerException('Failed to load servers: $e');
     }
   }
 
@@ -47,11 +47,11 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
         return domainData.map((json) => DomainModel.fromJson(json)).toList();
       } else {
         throw ServerException(
-          message: 'Failed to load domains: No data returned',
+       'Failed to load domains: No data returned',
         );
       }
     } catch (e) {
-      throw ServerException(message: 'Failed to load domains: $e');
+      throw ServerException( 'Failed to load domains: $e');
     }
   }
 }

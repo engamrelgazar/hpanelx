@@ -1,44 +1,66 @@
 import 'package:flutter/material.dart';
 import 'package:hpanelx/src/core/utils/responsive_helper.dart';
 
+/// A widget that provides different layouts based on screen size
 class ResponsiveLayout extends StatelessWidget {
-  final Widget mobileLayout;
-  final Widget? tabletLayout;
-  final Widget? desktopLayout;
+  /// The widget to display on mobile screens
+  final Widget mobile;
 
+  /// The widget to display on tablet screens (optional)
+  final Widget? tablet;
+
+  /// The widget to display on desktop screens (optional)
+  final Widget? desktop;
+
+  /// Creates a responsive layout that adapts to different screen sizes
   const ResponsiveLayout({
     super.key,
-    required this.mobileLayout,
-    this.tabletLayout,
-    this.desktopLayout,
+    required this.mobile,
+    this.tablet,
+    this.desktop,
   });
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveBuilder(
-      builder: (context, isMobile, isTablet, isDesktop) {
-        if (isDesktop && desktopLayout != null) {
-          return desktopLayout!;
-        } else if (isTablet && tabletLayout != null) {
-          return tabletLayout!;
+    // This ensures we reset the cached size if the orientation or size changes
+    ResponsiveHelper.resetCachedSize();
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (ResponsiveHelper.isDesktop(context) && desktop != null) {
+          return desktop!;
+        } else if (ResponsiveHelper.isTablet(context) && tablet != null) {
+          return tablet!;
         } else {
-          return mobileLayout;
+          return mobile;
         }
       },
     );
   }
 }
 
-/// A widget that adapts its child's padding based on the screen size.
+/// A widget that wraps content with responsive padding based on screen size
 class ResponsivePadding extends StatelessWidget {
+  /// The child widget to be wrapped with padding
   final Widget child;
+
+  /// Whether to apply horizontal padding
+  final bool horizontal;
+
+  /// Whether to apply vertical padding
+  final bool vertical;
+
+  /// Custom padding values by screen size
   final EdgeInsets? mobilePadding;
   final EdgeInsets? tabletPadding;
   final EdgeInsets? desktopPadding;
 
+  /// Creates a widget that applies responsive padding
   const ResponsivePadding({
     super.key,
     required this.child,
+    this.horizontal = true,
+    this.vertical = true,
     this.mobilePadding,
     this.tabletPadding,
     this.desktopPadding,
@@ -46,68 +68,83 @@ class ResponsivePadding extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveBuilder(
-      builder: (context, isMobile, isTablet, isDesktop) {
-        EdgeInsets padding;
+    EdgeInsets padding;
 
-        if (isDesktop && desktopPadding != null) {
-          padding = desktopPadding!;
-        } else if (isTablet && tabletPadding != null) {
-          padding = tabletPadding!;
-        } else if (mobilePadding != null) {
-          padding = mobilePadding!;
-        } else {
-          padding = ResponsiveHelper.responsivePadding(context);
-        }
+    if (ResponsiveHelper.isDesktop(context)) {
+      padding = desktopPadding ??
+          EdgeInsets.symmetric(
+            horizontal: horizontal ? 32.0 : 0.0,
+            vertical: vertical ? 24.0 : 0.0,
+          );
+    } else if (ResponsiveHelper.isTablet(context)) {
+      padding = tabletPadding ??
+          EdgeInsets.symmetric(
+            horizontal: horizontal ? 24.0 : 0.0,
+            vertical: vertical ? 16.0 : 0.0,
+          );
+    } else {
+      padding = mobilePadding ??
+          EdgeInsets.symmetric(
+            horizontal: horizontal ? 16.0 : 0.0,
+            vertical: vertical ? 12.0 : 0.0,
+          );
+    }
 
-        return Padding(padding: padding, child: child);
-      },
+    return Padding(
+      padding: padding,
+      child: child,
     );
   }
 }
 
-/// A widget that creates a responsive grid layout.
+/// A widget that creates responsive grid layouts
 class ResponsiveGrid extends StatelessWidget {
+  /// List of child widgets to display in the grid
   final List<Widget> children;
-  final int mobileCrossAxisCount;
-  final int? tabletCrossAxisCount;
-  final int? desktopCrossAxisCount;
-  final double spacing;
-  final double runSpacing;
 
+  /// Number of columns for each screen size
+  final int mobileColumns;
+  final int tabletColumns;
+  final int desktopColumns;
+
+  /// Spacing between items
+  final double crossAxisSpacing;
+  final double mainAxisSpacing;
+
+  /// Creates a responsive grid layout
   const ResponsiveGrid({
     super.key,
     required this.children,
-    required this.mobileCrossAxisCount,
-    this.tabletCrossAxisCount,
-    this.desktopCrossAxisCount,
-    this.spacing = 10,
-    this.runSpacing = 10,
+    this.mobileColumns = 1,
+    this.tabletColumns = 2,
+    this.desktopColumns = 4,
+    this.crossAxisSpacing = 16.0,
+    this.mainAxisSpacing = 16.0,
   });
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveBuilder(
-      builder: (context, isMobile, isTablet, isDesktop) {
-        final crossAxisCount =
-            isDesktop && desktopCrossAxisCount != null
-                ? desktopCrossAxisCount!
-                : isTablet && tabletCrossAxisCount != null
-                ? tabletCrossAxisCount!
-                : mobileCrossAxisCount;
+    int columns;
 
-        return GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: crossAxisCount,
-            crossAxisSpacing: spacing,
-            mainAxisSpacing: runSpacing,
-          ),
-          itemCount: children.length,
-          itemBuilder: (context, index) => children[index],
-        );
-      },
+    if (ResponsiveHelper.isDesktop(context)) {
+      columns = desktopColumns;
+    } else if (ResponsiveHelper.isTablet(context)) {
+      columns = tabletColumns;
+    } else {
+      columns = mobileColumns;
+    }
+
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: columns,
+        crossAxisSpacing: crossAxisSpacing,
+        mainAxisSpacing: mainAxisSpacing,
+        childAspectRatio: 1.0,
+      ),
+      itemCount: children.length,
+      itemBuilder: (context, index) => children[index],
     );
   }
 }

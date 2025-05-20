@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:hpanelx/src/core/routes/app_router.dart';
+import 'package:hpanelx/src/core/theme/theme_cubit.dart';
 import 'package:hpanelx/src/modules/startup/domain/repositories/auth_repository.dart';
 import 'package:hpanelx/src/modules/startup/domain/usecases/check_token_usecase.dart';
 import 'package:hpanelx/src/modules/startup/domain/usecases/remove_token_usecase.dart';
@@ -52,8 +53,10 @@ import 'package:hpanelx/src/modules/vms/domain/usecases/get_virtual_machine_by_i
 import 'package:hpanelx/src/modules/vms/domain/usecases/vm_action_usecases.dart';
 import 'package:hpanelx/src/modules/vms/presentation/cubit/vms_cubit.dart';
 
+/// The Service Locator instance
 final sl = GetIt.instance;
 
+/// Initialize all dependencies
 Future<void> init() async {
   // External
   final sharedPreferences = await SharedPreferences.getInstance();
@@ -64,6 +67,9 @@ Future<void> init() async {
   // Core
   sl.registerSingleton<AppRouter>(AppRouterImpl());
   sl.registerSingleton<ApiClient>(ApiClient());
+
+  // Theme
+  sl.registerSingleton<ThemeCubit>(ThemeCubit(sl()));
 
   // Data sources
   sl.registerSingleton<AuthLocalDataSource>(AuthLocalDataSourceImpl(sl()));
