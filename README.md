@@ -1,34 +1,68 @@
-# HPanelX - Responsive Hosting Control Panel
+# <div align="center">HPanelX</div>
+
+<div align="center">
+
+![HPanelX](docs/screenshots/app_screenshot.png)
+
+[![Flutter Version](https://img.shields.io/badge/Flutter-3.2.0+-02569B?logo=flutter)](https://flutter.dev)
+[![Dart Version](https://img.shields.io/badge/Dart-3.2.0+-0175C2?logo=dart)](https://dart.dev)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Bloc](https://img.shields.io/badge/Bloc-8.1.3-blue)](https://bloclibrary.dev)
 
 A modern, responsive Flutter application for managing hosting services including domains, virtual machines, and billing subscriptions.
 
-## Features
+</div>
 
-- **Clean Architecture**: Clear separation of concerns with domain, data, and presentation layers
-- **Responsive Design**: Adapts to mobile, tablet, and desktop screen sizes
-- **Theme Support**: Light, dark, and system theme modes
-- **State Management**: Using BLoC pattern for predictable state management
-- **Navigation**: Declarative routing using GoRouter
-- **API Integration**: Production-ready API client with proper error handling
-- **Dependency Injection**: Service locator pattern using GetIt
-- **Environment Support**: Development, staging, and production environments
+## 📋 Table of Contents
 
-## Screenshots
+- [✨ Features](#-features)
+- [🖼️ Screenshots](#-screenshots)
+- [🛠️ Tech Stack](#-tech-stack)
+- [📂 Project Structure](#-project-structure)
+- [🚀 Getting Started](#-getting-started)
+- [🏗️ Building for Production](#-building-for-production)
+- [📱 Responsive Design](#-responsive-design)
+- [🧩 State Management](#-state-management)
+- [➕ Adding New Features](#-adding-new-features)
+- [🌐 Environment Configuration](#-environment-configuration)
+- [🤝 Contribution Guidelines](#-contribution-guidelines)
+- [📄 License](#-license)
+- [👏 Acknowledgements](#-acknowledgements)
+- [👨‍💻 Developer](#-developer)
 
-![App Screenshot](docs/screenshots/app_screenshot.png)
+## ✨ Features
 
-## Tech Stack
+- **🏛️ Clean Architecture**: Clear separation of concerns with domain, data, and presentation layers
+- **📱 Responsive Design**: Adapts to mobile, tablet, and desktop screen sizes
+- **🎨 Theme Support**: Light, dark, and system theme modes
+- **🧩 State Management**: Using BLoC pattern for predictable state management
+- **🧭 Navigation**: Declarative routing using GoRouter
+- **🔌 API Integration**: Production-ready API client with proper error handling
+- **💉 Dependency Injection**: Service locator pattern using GetIt
+- **🌐 Environment Support**: Production environment configuration
 
-- **Flutter**: UI framework
-- **Dart**: Programming language
-- **BLoC/Cubit**: State management
-- **GoRouter**: Navigation
-- **Dio**: HTTP client
-- **GetIt**: Dependency injection
-- **Dartz**: Functional programming
-- **SharedPreferences**: Local storage
+## 🖼️ Screenshots
 
-## Project Structure
+<div align="center">
+  <img src="docs/screenshots/app_screenshot.png" alt="App Screenshot" width="600">
+</div>
+
+## 🛠️ Tech Stack
+
+| Category | Technologies |
+|----------|--------------|
+| **Framework** | ![Flutter](https://img.shields.io/badge/Flutter-02569B?style=flat&logo=flutter) |
+| **Language** | ![Dart](https://img.shields.io/badge/Dart-0175C2?style=flat&logo=dart) |
+| **State Management** | ![Bloc](https://img.shields.io/badge/Bloc-8.1.3-blue) ![Cubit](https://img.shields.io/badge/Cubit-8.1.2-blue) |
+| **Navigation** | ![GoRouter](https://img.shields.io/badge/GoRouter-13.0.0-brightgreen) |
+| **Networking** | ![Dio](https://img.shields.io/badge/Dio-5.4.0-red) |
+| **Storage** | ![SharedPreferences](https://img.shields.io/badge/SharedPreferences-2.2.2-orange) |
+| **Utilities** | ![Dartz](https://img.shields.io/badge/Dartz-0.10.1-yellowgreen) ![GetIt](https://img.shields.io/badge/GetIt-7.6.4-blueviolet) |
+
+## 📂 Project Structure
+
+<details>
+<summary>Click to expand the project structure</summary>
 
 ```
 lib/
@@ -56,8 +90,9 @@ lib/
 ├── main.dart                     # Application entry point
 └── hpanelx.dart                  # Main application widget
 ```
+</details>
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 
@@ -66,6 +101,9 @@ lib/
 - Android Studio or VS Code with Flutter extensions
 
 ### Installation
+
+<details>
+<summary>Expand installation steps</summary>
 
 1. Clone the repository
 
@@ -83,17 +121,15 @@ flutter pub get
 3. Run the application
 
 ```sh
-# For development environment
-flutter run --dart-define=ENVIRONMENT=development
-
-# For staging environment
-flutter run --dart-define=ENVIRONMENT=staging
-
 # For production environment
 flutter run --dart-define=ENVIRONMENT=production
 ```
+</details>
 
-## Building for Production
+## 🏗️ Building for Production
+
+<details>
+<summary>Expand build instructions</summary>
 
 ### App Icons and Splash Screen
 
@@ -164,10 +200,14 @@ flutter build ipa --dart-define=ENVIRONMENT=production
 
 The IPA will be available at:
 `build/ios/ipa/HPanelX.ipa`
+</details>
 
-## Responsive Design
+## 📱 Responsive Design
 
 The application uses the ResponsiveHelper class to ensure a consistent UI across different device sizes:
+
+<details>
+<summary>View responsive design code example</summary>
 
 ```dart
 // Check device type
@@ -193,10 +233,14 @@ ResponsiveBuilder(
   },
 )
 ```
+</details>
 
-## State Management
+## 🧩 State Management
 
-The application uses BLoC and Cubit for state management. These are registered in the dependency injection container (`lib/src/core/di/injection_container.dart`) and accessed via BlocProvider in the UI:
+The application uses BLoC and Cubit for state management:
+
+<details>
+<summary>View state management code example</summary>
 
 ```dart
 // Register in dependency injection
@@ -215,8 +259,12 @@ BlocProvider<HomeBloc>(
 // Use in widget
 context.read<HomeBloc>().add(LoadHomeData());
 ```
+</details>
 
-## Adding New Features
+## ➕ Adding New Features
+
+<details>
+<summary>View instructions for adding new features</summary>
 
 To add a new feature to the application, follow these steps:
 
@@ -227,10 +275,14 @@ To add a new feature to the application, follow these steps:
    - **Presentation**: Bloc/Cubit, pages, widgets
 3. Register dependencies in `lib/src/core/di/injection_container.dart`
 4. Add routes in `lib/src/core/routes/app_router.dart`
+</details>
 
-## Environment Configuration
+## 🌐 Environment Configuration
 
-The application supports multiple environments that can be configured at build time:
+<details>
+<summary>View environment configuration details</summary>
+
+The application supports environment configuration at build time:
 
 ```dart
 // Set with build flag
@@ -242,20 +294,25 @@ const environment = String.fromEnvironment(
   defaultValue: 'development',
 );
 ```
+</details>
 
-## Contribution Guidelines
+## 🤝 Contribution Guidelines
+
+<details>
+<summary>View contribution guidelines</summary>
 
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature/my-feature`
 3. Commit changes: `git commit -am 'Add new feature'`
 4. Push to the branch: `git push origin feature/my-feature`
 5. Submit a pull request
+</details>
 
-## License
+## 📄 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Acknowledgements
+## 👏 Acknowledgements
 
 - [Flutter](https://flutter.dev)
 - [Bloc Library](https://bloclibrary.dev)
@@ -263,6 +320,25 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - [GetIt](https://pub.dev/packages/get_it)
 - [Dio](https://pub.dev/packages/dio)
 
----
+## 👨‍💻 Developer
 
-Developed by [Your Name](https://github.com/yourusername)
+<div align="center">
+
+### Amr Elgazar
+
+<div style="display: flex; justify-content: center; gap: 10px; margin-top: 10px;">
+  <a href="https://amrelgazar.com">
+    <img src="https://img.shields.io/badge/Website-amrelgazar.com-blue?style=for-the-badge&logo=web" alt="Website" />
+  </a>
+  <a href="https://www.facebook.com/elgazarTech/">
+    <img src="https://img.shields.io/badge/Facebook-elgazarTech-blue?style=for-the-badge&logo=facebook" alt="Facebook" />
+  </a>
+  <a href="https://www.linkedin.com/in/amr-ahmed-elgazar/">
+    <img src="https://img.shields.io/badge/LinkedIn-amr--ahmed--elgazar-blue?style=for-the-badge&logo=linkedin" alt="LinkedIn" />
+  </a>
+  <a href="http://wa.me/201030691425">
+    <img src="https://img.shields.io/badge/WhatsApp-201030691425-25D366?style=for-the-badge&logo=whatsapp" alt="WhatsApp" />
+  </a>
+</div>
+
+</div>

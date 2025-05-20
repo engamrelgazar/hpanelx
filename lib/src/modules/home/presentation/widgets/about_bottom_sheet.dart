@@ -111,7 +111,11 @@ class AboutBottomSheet extends StatelessWidget {
                 ),
                 const SizedBox(width: 16),
                 _SocialButton(
-                  icon: FontAwesomeIcons.whatsapp,
+                  iconWidget: FaIcon(
+                    FontAwesomeIcons.whatsapp,
+                    color: Theme.of(context).primaryColor,
+                    size: 24,
+                  ),
                   onPressed: () => _launchURL('http://wa.me/201030691425'),
                 ),
               ],
@@ -125,10 +129,15 @@ class AboutBottomSheet extends StatelessWidget {
 }
 
 class _SocialButton extends StatelessWidget {
-  final IconData icon;
+  final IconData? icon;
+  final Widget? iconWidget;
   final VoidCallback onPressed;
 
-  const _SocialButton({required this.icon, required this.onPressed});
+  const _SocialButton({
+    this.icon,
+    this.iconWidget,
+    required this.onPressed,
+  }) : assert(icon != null || iconWidget != null);
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +152,8 @@ class _SocialButton extends StatelessWidget {
             color: Theme.of(context).primaryColor.withAlpha(26),
             shape: BoxShape.circle,
           ),
-          child: Icon(icon, color: Theme.of(context).primaryColor, size: 24),
+          child: iconWidget ??
+              Icon(icon, color: Theme.of(context).primaryColor, size: 24),
         ),
       ),
     );
