@@ -66,7 +66,7 @@ class _VmsPageState extends State<VmsPage> {
       onRefresh: () async {
         _loadVirtualMachines();
       },
-      color: AppTheme.primaryColor,
+      color: Theme.of(context).primaryColor,
       child: ListView.builder(
         padding: EdgeInsets.all(ResponsiveHelper.w(16, context)),
         itemCount: state.vms.length,
@@ -141,7 +141,7 @@ class _VmsPageState extends State<VmsPage> {
             icon: const Icon(Icons.refresh),
             label: const Text('Refresh'),
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppTheme.primaryColor,
+              backgroundColor: Theme.of(context).primaryColor,
               foregroundColor: Colors.white,
               padding: EdgeInsets.symmetric(
                 horizontal: ResponsiveHelper.w(24, context),
@@ -202,7 +202,7 @@ class _VmsPageState extends State<VmsPage> {
             icon: const Icon(Icons.refresh),
             label: const Text('Retry'),
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppTheme.primaryColor,
+              backgroundColor: Theme.of(context).primaryColor,
               foregroundColor: Colors.white,
               padding: EdgeInsets.symmetric(
                 horizontal: ResponsiveHelper.w(24, context),

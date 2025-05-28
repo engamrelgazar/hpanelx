@@ -216,7 +216,7 @@ class _DomainsPageState extends State<DomainsPage> {
               icon: const Icon(Icons.refresh),
               label: const Text('Try Again'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppTheme.primaryColor,
+                backgroundColor: Theme.of(context).primaryColor,
                 foregroundColor: Colors.white,
                 padding: EdgeInsets.symmetric(
                   horizontal: ResponsiveHelper.w(24, context),

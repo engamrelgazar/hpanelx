@@ -53,7 +53,7 @@ class _HpanelxState extends State<Hpanelx> with WidgetsBindingObserver {
               debugShowCheckedModeBanner: false,
               themeMode: context.read<ThemeCubit>().getThemeMode(),
               theme: AppTheme.lightTheme,
-              darkTheme: AppTheme.darkTheme,
+              darkTheme:AppTheme.darkTheme,
               routerConfig: di.sl<AppRouter>().router,
               builder: (context, child) {
                 // Apply a global font scaling

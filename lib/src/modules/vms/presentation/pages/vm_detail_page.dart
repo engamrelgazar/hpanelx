@@ -106,7 +106,7 @@ class _VmDetailPageState extends State<VmDetailPage> {
                       icon: const Icon(Icons.refresh),
                       label: const Text('Retry'),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppTheme.primaryColor,
+                        backgroundColor: Theme.of(context).primaryColor,
                         foregroundColor: Colors.white,
                         padding: EdgeInsets.symmetric(
                           horizontal: ResponsiveHelper.w(24, context),
@@ -493,7 +493,7 @@ class _VmDetailPageState extends State<VmDetailPage> {
                         ? ResponsiveHelper.sp(20, context)
                         : ResponsiveHelper.sp(18, context),
                 fontWeight: FontWeight.bold,
-                color: AppTheme.primaryColor,
+                color: Theme.of(context).primaryColor
               ),
             ),
             Divider(height: ResponsiveHelper.h(24, context)),
@@ -567,7 +567,7 @@ class _VmDetailPageState extends State<VmDetailPage> {
                         ? ResponsiveHelper.sp(20, context)
                         : ResponsiveHelper.sp(18, context),
                 fontWeight: FontWeight.bold,
-                color: AppTheme.primaryColor,
+                color: Theme.of(context).primaryColor
               ),
             ),
             Divider(height: ResponsiveHelper.h(24, context)),
@@ -675,7 +675,7 @@ class _VmDetailPageState extends State<VmDetailPage> {
                 isTablet
                     ? ResponsiveHelper.sp(20, context)
                     : ResponsiveHelper.sp(18, context),
-            color: AppTheme.primaryColor,
+            color: Theme.of(context).primaryColor,
             tooltip: 'Copy IP address',
           ),
         ],

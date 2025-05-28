@@ -75,7 +75,7 @@ class AppTheme {
           statusBarBrightness: Brightness.dark,
         ),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: Colors.white,
         elevation: elevationSmall,
         shape: RoundedRectangleBorder(
@@ -191,7 +191,7 @@ class AppTheme {
           statusBarBrightness: Brightness.dark,
         ),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: const Color(0xFF1E1E1E),
         elevation: elevationSmall,
         shape: RoundedRectangleBorder(

@@ -232,7 +232,7 @@ class _DomainCheckerSheetState extends State<DomainCheckerSheet> {
                           ElevatedButton(
                             onPressed: _checkDomainAvailability,
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: AppTheme.primaryColor,
+                              backgroundColor: Theme.of(context).primaryColor,
                               foregroundColor: Colors.white,
                               padding: EdgeInsets.symmetric(
                                 vertical: ResponsiveHelper.h(16, context),
@@ -397,7 +397,7 @@ class _DomainCheckerSheetState extends State<DomainCheckerSheet> {
             ElevatedButton(
               onPressed: _checkDomainAvailability,
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppTheme.primaryColor,
+                backgroundColor: Theme.of(context).primaryColor,
                 foregroundColor: Colors.white,
               ),
               child: const Text('Try Again'),
@@ -601,7 +601,7 @@ class _DomainCheckerSheetState extends State<DomainCheckerSheet> {
                   // Add to cart or register domain logic here
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppTheme.primaryColor,
+                  backgroundColor: Theme.of(context).primaryColor,
                   foregroundColor: Colors.white,
                   padding: EdgeInsets.symmetric(
                     horizontal: ResponsiveHelper.w(8, context),

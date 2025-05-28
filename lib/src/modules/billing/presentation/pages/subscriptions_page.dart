@@ -43,7 +43,7 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
       body: BlocBuilder<BillingCubit, BillingState>(
         builder: (context, state) {
           if (state is BillingLoading) {
-            return SubscriptionShimmer(isTablet: isTablet);
+            return _buildLoadingState(isTablet);
           } else if (state is BillingError) {
             return _buildErrorView(state.message, isTablet);
           } else if (state is BillingLoaded) {
@@ -54,9 +54,17 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
           }
 
           // Initial state or unexpected state
-          return SubscriptionShimmer(isTablet: isTablet);
+          return _buildLoadingState(isTablet);
         },
       ),
+    );
+  }
+
+  Widget _buildLoadingState(bool isTablet) {
+    return ListView.builder(
+      padding: EdgeInsets.all(ResponsiveHelper.w(16, context)),
+      itemCount: 8, // Show 8 placeholders
+      itemBuilder: (context, index) => SubscriptionShimmer(isTablet: isTablet),
     );
   }
 
@@ -65,7 +73,7 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
       onRefresh: () async {
         _loadSubscriptions();
       },
-      color: AppTheme.primaryColor,
+      color: Theme.of(context).primaryColor,
       child: ListView.builder(
         padding: EdgeInsets.all(ResponsiveHelper.w(16, context)),
         itemCount: state.subscriptions.length,
@@ -132,7 +140,7 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
             icon: const Icon(Icons.refresh),
             label: const Text('Refresh'),
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppTheme.primaryColor,
+              backgroundColor: Theme.of(context).primaryColor,
               foregroundColor: Colors.white,
               padding: EdgeInsets.symmetric(
                 horizontal: ResponsiveHelper.w(24, context),
@@ -193,7 +201,7 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
             icon: const Icon(Icons.refresh),
             label: const Text('Retry'),
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppTheme.primaryColor,
+              backgroundColor: Theme.of(context).primaryColor,
               foregroundColor: Colors.white,
               padding: EdgeInsets.symmetric(
                 horizontal: ResponsiveHelper.w(24, context),

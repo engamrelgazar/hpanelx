@@ -19,8 +19,16 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    // Check network permissions first
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _checkNetworkPermissions();
+    });
     // Load data when page is first opened
     context.read<HomeBloc>().add(LoadHomeDataEvent());
+  }
+
+  Future<void> _checkNetworkPermissions() async {
+    await NetworkPermissionHelper.initializeNetworkPermissions(context);
   }
 
   @override
@@ -98,7 +106,7 @@ class _HomePageState extends State<HomePage> {
                             _buildSectionCard(
                               title: 'VPS Machines',
                               icon: Icons.dns_rounded,
-                              color: AppTheme.primaryColor,
+                              color: Theme.of(context).primaryColor,
                               description:
                                   'Manage your virtual private servers',
                               onTap: () {
@@ -144,7 +152,7 @@ class _HomePageState extends State<HomePage> {
                             _buildSectionCard(
                               title: 'VPS Machines',
                               icon: Icons.dns_rounded,
-                              color: AppTheme.primaryColor,
+                              color: Theme.of(context).primaryColor,
                               description:
                                   'Manage your virtual private servers',
                               onTap: () {
@@ -186,7 +194,7 @@ class _HomePageState extends State<HomePage> {
                               child: _buildSectionCard(
                                 title: 'VPS Machines',
                                 icon: Icons.dns_rounded,
-                                color: AppTheme.primaryColor,
+                                color: Theme.of(context).primaryColor,
                                 description:
                                     'Manage your virtual private servers',
                                 onTap: () {
@@ -542,7 +550,7 @@ class _HomePageState extends State<HomePage> {
           title: 'Active Servers',
           value: serversCount.toString(),
           icon: Icons.dns_rounded,
-          color: AppTheme.primaryColor,
+          color: Theme.of(context).primaryColor,
           isTablet: isTablet,
         ),
         _buildStatCard(

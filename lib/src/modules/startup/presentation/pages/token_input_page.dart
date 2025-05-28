@@ -19,11 +19,6 @@ class _TokenInputPageState extends State<TokenInputPage>
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
 
-  // Modern color scheme
-  final Color _primaryGradientStart = const Color(0xFF6C63FF);
-  final Color _cardColor = const Color(0xFFF8F9FA);
-  final Color _textColor = const Color(0xFF2D3436);
-  final Color _hintColor = const Color(0xFF636E72);
 
   @override
   void initState() {
@@ -62,7 +57,6 @@ class _TokenInputPageState extends State<TokenInputPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: _cardColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -114,7 +108,7 @@ class _TokenInputPageState extends State<TokenInputPage>
                             ResponsiveHelper.w(20, context),
                           ),
                           decoration: BoxDecoration(
-                            color: _primaryGradientStart.withAlpha(26),
+                            color: Theme.of(context).primaryColor.withAlpha(26),
                             shape: BoxShape.circle,
                           ),
                           child: Icon(
@@ -123,7 +117,7 @@ class _TokenInputPageState extends State<TokenInputPage>
                               context,
                               60,
                             ),
-                            color: _primaryGradientStart,
+                            color: Theme.of(context).primaryColor,
                           ),
                         ),
                       ),
@@ -133,7 +127,7 @@ class _TokenInputPageState extends State<TokenInputPage>
                         style: TextStyle(
                           fontSize: ResponsiveHelper.sp(24, context),
                           fontWeight: FontWeight.bold,
-                          color: _textColor,
+              
                           letterSpacing: 0.5,
                         ),
                       ),
@@ -142,7 +136,7 @@ class _TokenInputPageState extends State<TokenInputPage>
                         'Please enter your API bearer token to authenticate',
                         style: TextStyle(
                           fontSize: ResponsiveHelper.sp(14, context),
-                          color: _hintColor,
+            
                           letterSpacing: 0.3,
                         ),
                       ),
@@ -155,7 +149,7 @@ class _TokenInputPageState extends State<TokenInputPage>
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: _primaryGradientStart.withAlpha(26),
+                              color: Theme.of(context).primaryColor.withAlpha(26),
                               blurRadius: 20,
                               offset: const Offset(0, 10),
                             ),
@@ -181,36 +175,36 @@ class _TokenInputPageState extends State<TokenInputPage>
                                         16,
                                         context,
                                       ),
-                                      color: _textColor,
+                                 
                                       letterSpacing: 0.5,
                                     ),
                                     decoration: InputDecoration(
                                       labelText: 'Bearer Token',
                                       hintText: 'Enter your bearer token',
                                       labelStyle: TextStyle(
-                                        color: _hintColor,
+                          
                                         fontSize: ResponsiveHelper.sp(
                                           14,
                                           context,
                                         ),
                                       ),
                                       hintStyle: TextStyle(
-                                        color: _hintColor.withAlpha(179),
+                                        
                                         fontSize: ResponsiveHelper.sp(
                                           14,
                                           context,
                                         ),
                                       ),
-                                      prefixIcon: Icon(
+                                      prefixIcon:   Icon(
                                         Icons.security,
-                                        color: _primaryGradientStart,
+                                        color: Theme.of(context).primaryColor,
                                       ),
                                       suffixIcon: IconButton(
                                         icon: Icon(
                                           isTokenVisible
                                               ? Icons.visibility_off
                                               : Icons.visibility,
-                                          color: _primaryGradientStart,
+                                          color: Theme.of(context).primaryColor,
                                         ),
                                         onPressed: () {
                                           context.read<StartupBloc>().add(
@@ -223,7 +217,7 @@ class _TokenInputPageState extends State<TokenInputPage>
                                           ResponsiveHelper.r(15, context),
                                         ),
                                         borderSide: BorderSide(
-                                          color: _primaryGradientStart
+                                          color: Theme.of(context).primaryColor
                                               .withAlpha(51),
                                         ),
                                       ),
@@ -232,7 +226,7 @@ class _TokenInputPageState extends State<TokenInputPage>
                                           ResponsiveHelper.r(15, context),
                                         ),
                                         borderSide: BorderSide(
-                                          color: _primaryGradientStart
+                                          color: Theme.of(context).primaryColor
                                               .withAlpha(51),
                                         ),
                                       ),
@@ -240,13 +234,13 @@ class _TokenInputPageState extends State<TokenInputPage>
                                         borderRadius: BorderRadius.circular(
                                           ResponsiveHelper.r(15, context),
                                         ),
-                                        borderSide: BorderSide(
-                                          color: _primaryGradientStart,
+                                        borderSide:  BorderSide(
+                                          color: Theme.of(context).primaryColor,
                                           width: 2,
                                         ),
                                       ),
                                       filled: true,
-                                      fillColor: _cardColor,
+                                      
                                     ),
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
@@ -271,7 +265,7 @@ class _TokenInputPageState extends State<TokenInputPage>
                                               ? null
                                               : _saveToken,
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor: _primaryGradientStart,
+                                        backgroundColor: Theme.of(context).primaryColor,
                                         foregroundColor: Colors.white,
                                         elevation: 0,
                                         shape: RoundedRectangleBorder(

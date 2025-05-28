@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hpanelx/src/core/theme/app_theme.dart';
 import 'package:hpanelx/src/core/utils/responsive_helper.dart';
 import 'package:lottie/lottie.dart';
 
@@ -86,7 +85,7 @@ class SuccessDialog extends StatelessWidget {
               style: TextStyle(
                 fontSize: ResponsiveHelper.sp(isTablet ? 22 : 20, context),
                 fontWeight: FontWeight.bold,
-                color: AppTheme.primaryColor,
+                color: Theme.of(context).primaryColor,
               ),
               textAlign: TextAlign.center,
             ),
@@ -103,7 +102,7 @@ class SuccessDialog extends StatelessWidget {
             ElevatedButton(
               onPressed: onButtonPressed ?? () => Navigator.pop(context),
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppTheme.primaryColor,
+                backgroundColor: Theme.of(context).primaryColor,
                 foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(

@@ -36,7 +36,7 @@ class InfoItem extends StatelessWidget {
                 isTablet
                     ? ResponsiveHelper.responsiveIconSize(context, 18)
                     : ResponsiveHelper.responsiveIconSize(context, 16),
-            color: iconColor ?? AppTheme.primaryColor,
+            color: iconColor ?? Theme.of(context).primaryColor,
           ),
           SizedBox(width: ResponsiveHelper.w(6, context)),
         ],

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hpanelx/src/core/theme/app_theme.dart';
 import 'package:hpanelx/src/core/utils/responsive_helper.dart';
 
 class AppHeader extends StatelessWidget implements PreferredSizeWidget {
@@ -43,7 +42,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
       ),
       centerTitle: centerTitle,
       elevation: elevation,
-      backgroundColor: AppTheme.primaryColor,
+      backgroundColor: Theme.of(context).primaryColor,
       foregroundColor: Colors.white,
       leading:
           showBackButton
@@ -109,7 +108,7 @@ class SearchField extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(ResponsiveHelper.w(16, context)),
       decoration: BoxDecoration(
-        color: AppTheme.primaryColor,
+        color: Theme.of(context).primaryColor,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(ResponsiveHelper.r(24, context)),
           bottomRight: Radius.circular(ResponsiveHelper.r(24, context)),
