@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:hpanelx/src/core/api/api_constants.dart';
 import 'package:hpanelx/src/core/di/injection_container.dart' as di;
 import 'package:hpanelx/src/core/theme/app_theme.dart';
-import 'package:hpanelx/src/core/utils/app_info.dart';
 import 'hpanelx.dart';
 
 /// Application entry point
@@ -11,8 +10,6 @@ Future<void> main() async {
   // Ensure Flutter binding is initialized
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize app info
-  await AppInfo().initialize();
 
   // Set the environment based on build configuration
   _configureEnvironment();
