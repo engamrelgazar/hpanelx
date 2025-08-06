@@ -7,11 +7,14 @@ import 'dart:io'; // Add this import for InternetAddress
 /// A client for making API requests with proper error handling and authentication.
 class ApiClient {
   final Dio _dio;
+  final SharedPreferences _sharedPreferences;
   static const String BEARER_TOKEN_KEY = 'BEARER_TOKEN';
   static String? _cachedToken;
   final Map<String, CancelToken> _cancelTokens = {};
 
-  ApiClient() : _dio = Dio() {
+  ApiClient({required SharedPreferences sharedPreferences})
+      : _dio = Dio(),
+        _sharedPreferences = sharedPreferences {
     _configureOptions();
     _addInterceptors();
     _initialize();
@@ -35,7 +38,7 @@ class ApiClient {
         onRequest: (options, handler) async {
           if (_cachedToken == null) {
             // Try to read token from local storage if not in memory
-            await _loadTokenFromStorage();
+            _loadTokenFromStorage();
           }
 
           if (_cachedToken != null) {
@@ -53,15 +56,14 @@ class ApiClient {
   }
 
   /// Initialize the client by loading the token
-  Future<void> _initialize() async {
-    await _loadTokenFromStorage();
+  void _initialize() {
+    _loadTokenFromStorage();
   }
 
   /// Loads the authentication token from local storage
-  Future<void> _loadTokenFromStorage() async {
+  void _loadTokenFromStorage() {
     try {
-      final prefs = await SharedPreferences.getInstance();
-      _cachedToken = prefs.getString(BEARER_TOKEN_KEY);
+      _cachedToken = _sharedPreferences.getString(BEARER_TOKEN_KEY);
     } catch (e) {
       // Handle storage access error
       _cachedToken = null;
@@ -71,11 +73,15 @@ class ApiClient {
   /// Updates the cached token
   void updateToken(String token) {
     _cachedToken = token;
+
+    _sharedPreferences.setString(BEARER_TOKEN_KEY, token);
   }
 
   /// Clears the cached token
   void clearToken() {
     _cachedToken = null;
+
+    _sharedPreferences.remove(BEARER_TOKEN_KEY);
   }
 
   /// Creates or returns an existing cancel token for a given request identifier

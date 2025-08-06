@@ -86,7 +86,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
   );
 }
 
-// Widget لإضافة حقل البحث تحت AppBar
+
 class SearchField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hpanelx/src/core/theme/app_theme.dart';
 import 'package:hpanelx/src/core/utils/responsive_helper.dart';
 
 class InfoItem extends StatelessWidget {
@@ -32,10 +31,9 @@ class InfoItem extends StatelessWidget {
         if (icon != null) ...[
           Icon(
             icon,
-            size:
-                isTablet
-                    ? ResponsiveHelper.responsiveIconSize(context, 18)
-                    : ResponsiveHelper.responsiveIconSize(context, 16),
+            size: isTablet
+                ? ResponsiveHelper.responsiveIconSize(context, 18)
+                : ResponsiveHelper.responsiveIconSize(context, 16),
             color: iconColor ?? Theme.of(context).primaryColor,
           ),
           SizedBox(width: ResponsiveHelper.w(6, context)),
@@ -46,34 +44,30 @@ class InfoItem extends StatelessWidget {
             children: [
               Text(
                 label,
-                style:
-                    labelStyle ??
+                style: labelStyle ??
                     TextStyle(
-                      fontSize:
-                          isTablet
-                              ? ResponsiveHelper.responsiveFontSize(context, 12)
-                              : ResponsiveHelper.responsiveFontSize(
-                                context,
-                                10,
-                              ),
-                      color: Colors.grey[600],
+                      fontSize: isTablet
+                          ? ResponsiveHelper.responsiveFontSize(context, 12)
+                          : ResponsiveHelper.responsiveFontSize(
+                              context,
+                              10,
+                            ),
+                      color: Theme.of(context).textTheme.bodySmall?.color,
                     ),
               ),
               SizedBox(height: ResponsiveHelper.h(2, context)),
               Text(
                 text,
-                style:
-                    textStyle ??
+                style: textStyle ??
                     TextStyle(
-                      fontSize:
-                          isTablet
-                              ? ResponsiveHelper.responsiveFontSize(context, 14)
-                              : ResponsiveHelper.responsiveFontSize(
-                                context,
-                                12,
-                              ),
+                      fontSize: isTablet
+                          ? ResponsiveHelper.responsiveFontSize(context, 14)
+                          : ResponsiveHelper.responsiveFontSize(
+                              context,
+                              12,
+                            ),
                       fontWeight: FontWeight.w500,
-                      color: AppTheme.darkColor,
+                      color: Theme.of(context).textTheme.bodyMedium?.color,
                     ),
                 maxLines: maxLines,
                 overflow: TextOverflow.ellipsis,

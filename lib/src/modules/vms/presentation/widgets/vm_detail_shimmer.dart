@@ -16,13 +16,14 @@ class VmDetailShimmer extends StatelessWidget {
         children: [
           // Status card
           _buildShimmerCard(
-            height: ResponsiveHelper.h(120, context),
+            height: ResponsiveHelper.h(140, context),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // Status indicator
                 Container(
                   width: ResponsiveHelper.w(120, context),
-                  height: ResponsiveHelper.h(30, context),
+                  height: ResponsiveHelper.h(28, context),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(
@@ -30,7 +31,7 @@ class VmDetailShimmer extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: ResponsiveHelper.h(24, context)),
+                SizedBox(height: ResponsiveHelper.h(20, context)),
                 // Action buttons
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -109,10 +110,9 @@ class VmDetailShimmer extends StatelessWidget {
               itemCount,
               (index) => Padding(
                 padding: EdgeInsets.only(
-                  bottom:
-                      index < itemCount - 1
-                          ? ResponsiveHelper.h(12, context)
-                          : 0,
+                  bottom: index < itemCount - 1
+                      ? ResponsiveHelper.h(12, context)
+                      : 0,
                 ),
                 child: _buildInfoItem(context),
               ),
@@ -152,10 +152,9 @@ class VmDetailShimmer extends StatelessWidget {
       children: [
         Container(
           width: ResponsiveHelper.w(100, context),
-          height:
-              isTablet
-                  ? ResponsiveHelper.h(16, context)
-                  : ResponsiveHelper.h(14, context),
+          height: isTablet
+              ? ResponsiveHelper.h(16, context)
+              : ResponsiveHelper.h(14, context),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(ResponsiveHelper.r(4, context)),
@@ -164,10 +163,9 @@ class VmDetailShimmer extends StatelessWidget {
         SizedBox(width: ResponsiveHelper.w(16, context)),
         Expanded(
           child: Container(
-            height:
-                isTablet
-                    ? ResponsiveHelper.h(16, context)
-                    : ResponsiveHelper.h(14, context),
+            height: isTablet
+                ? ResponsiveHelper.h(16, context)
+                : ResponsiveHelper.h(14, context),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(
@@ -182,8 +180,8 @@ class VmDetailShimmer extends StatelessWidget {
 
   Widget _buildActionButton(BuildContext context) {
     return Container(
-      width: ResponsiveHelper.w(80, context),
-      height: ResponsiveHelper.h(36, context),
+      width: ResponsiveHelper.w(70, context),
+      height: ResponsiveHelper.h(32, context),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(ResponsiveHelper.r(8, context)),

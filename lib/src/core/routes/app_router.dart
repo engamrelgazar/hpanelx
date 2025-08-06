@@ -11,7 +11,9 @@ import 'package:hpanelx/src/modules/domains/presentation/bloc/domains_bloc.dart'
 import 'package:hpanelx/src/modules/vms/presentation/pages/vms_page.dart';
 import 'package:hpanelx/src/modules/vms/presentation/cubit/vms_cubit.dart';
 import 'package:hpanelx/src/modules/billing/presentation/pages/subscriptions_page.dart';
+import 'package:hpanelx/src/modules/billing/presentation/pages/payment_methods_page.dart';
 import 'package:hpanelx/src/modules/billing/presentation/cubit/billing_cubit.dart';
+import 'package:hpanelx/src/modules/billing/presentation/cubit/payment_methods_cubit.dart';
 
 /// Route name constants for the application
 class AppRoutes {
@@ -26,6 +28,7 @@ class AppRoutes {
 
   // Billing routes
   static const String subscriptions = '/billing/subscriptions';
+  static const String paymentMethods = '/billing/payment-methods';
 
   // Helper methods for navigation
   static String domainDetails(String domainId) => '$domains/$domainId';
@@ -96,7 +99,6 @@ class AppRouterImpl implements AppRouter {
           create: (context) => di.sl<DomainsBloc>(),
           child: const DomainsPage(),
         ),
-  
       ),
 
       // Virtual Machines routes
@@ -107,7 +109,6 @@ class AppRouterImpl implements AppRouter {
           create: (context) => di.sl<VmsCubit>(),
           child: const VmsPage(),
         ),
-       
       ),
 
       // Billing routes
@@ -117,6 +118,15 @@ class AppRouterImpl implements AppRouter {
         builder: (context, state) => BlocProvider<BillingCubit>(
           create: (context) => di.sl<BillingCubit>(),
           child: const SubscriptionsPage(),
+        ),
+      ),
+
+      GoRoute(
+        path: AppRoutes.paymentMethods,
+        name: 'paymentMethods',
+        builder: (context, state) => BlocProvider<PaymentMethodsCubit>(
+          create: (context) => di.sl<PaymentMethodsCubit>(),
+          child: const PaymentMethodsPage(),
         ),
       ),
     ];

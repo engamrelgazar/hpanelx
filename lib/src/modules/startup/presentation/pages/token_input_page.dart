@@ -48,7 +48,7 @@ class _TokenInputPageState extends State<TokenInputPage>
     }
   }
 
-  // استخراج مسار إعادة التوجيه من معلمات URL
+
   String? _getRedirectPath() {
     final uri = Uri.parse(GoRouterState.of(context).uri.toString());
     return uri.queryParameters['redirect'];
@@ -68,12 +68,32 @@ class _TokenInputPageState extends State<TokenInputPage>
       body: BlocListener<StartupBloc, StartupState>(
         listener: (context, state) {
           if (state is TokenSaved) {
-            // التحقق من وجود مسار إعادة توجيه
-            final redirectPath = _getRedirectPath();
-            if (redirectPath != null && redirectPath.isNotEmpty) {
-              context.go(redirectPath);
+
+            context.read<StartupBloc>().add(ValidateTokenEvent());
+          } else if (state is TokenValidated) {
+            if (state.isValid) {
+
+              final redirectPath = _getRedirectPath();
+              if (redirectPath != null && redirectPath.isNotEmpty) {
+                context.go(redirectPath);
+              } else {
+                context.go('/home');
+              }
             } else {
-              context.go('/home');
+
+              context.read<StartupBloc>().add(LogoutEvent());
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: const Text('Invalid token. Please check your token and try again.'),
+                  backgroundColor: Colors.red.shade400,
+                  behavior: SnackBarBehavior.floating,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                      ResponsiveHelper.r(10, context),
+                    ),
+                  ),
+                ),
+              );
             }
           } else if (state is StartupError) {
             ScaffoldMessenger.of(context).showSnackBar(

@@ -21,3 +21,5 @@ class SaveTokenEvent extends StartupEvent {
 class ToggleTokenVisibilityEvent extends StartupEvent {}
 
 class LogoutEvent extends StartupEvent {}
+
+class ValidateTokenEvent extends StartupEvent {}

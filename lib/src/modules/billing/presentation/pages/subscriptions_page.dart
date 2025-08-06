@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hpanelx/src/core/theme/app_theme.dart';
 import 'package:hpanelx/src/core/utils/responsive_helper.dart';
 import 'package:hpanelx/src/modules/billing/presentation/cubit/billing_cubit.dart';
@@ -33,6 +34,11 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
       appBar: AppBar(
         title: const Text('Subscriptions'),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.credit_card),
+            onPressed: () => context.push('/billing/payment-methods'),
+            tooltip: 'Payment Methods',
+          ),
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: _loadSubscriptions,
@@ -105,20 +111,18 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
         children: [
           Icon(
             Icons.receipt_long,
-            size:
-                isTablet
-                    ? ResponsiveHelper.sp(80, context)
-                    : ResponsiveHelper.sp(64, context),
+            size: isTablet
+                ? ResponsiveHelper.sp(80, context)
+                : ResponsiveHelper.sp(64, context),
             color: Colors.grey[400],
           ),
           SizedBox(height: ResponsiveHelper.h(16, context)),
           Text(
             'No subscriptions found',
             style: TextStyle(
-              fontSize:
-                  isTablet
-                      ? ResponsiveHelper.sp(20, context)
-                      : ResponsiveHelper.sp(18, context),
+              fontSize: isTablet
+                  ? ResponsiveHelper.sp(20, context)
+                  : ResponsiveHelper.sp(18, context),
               fontWeight: FontWeight.bold,
               color: Colors.grey[700],
             ),
@@ -127,10 +131,9 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
           Text(
             'Your subscriptions will appear here',
             style: TextStyle(
-              fontSize:
-                  isTablet
-                      ? ResponsiveHelper.sp(16, context)
-                      : ResponsiveHelper.sp(14, context),
+              fontSize: isTablet
+                  ? ResponsiveHelper.sp(16, context)
+                  : ResponsiveHelper.sp(14, context),
               color: Colors.grey[600],
             ),
           ),
@@ -161,21 +164,19 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
           Icon(
             Icons.error_outline,
             color: AppTheme.errorColor,
-            size:
-                isTablet
-                    ? ResponsiveHelper.sp(80, context)
-                    : ResponsiveHelper.sp(64, context),
+            size: isTablet
+                ? ResponsiveHelper.sp(80, context)
+                : ResponsiveHelper.sp(64, context),
           ),
           SizedBox(height: ResponsiveHelper.h(16, context)),
           Text(
             'Failed to load subscriptions',
             style: TextStyle(
-              fontSize:
-                  isTablet
-                      ? ResponsiveHelper.sp(20, context)
-                      : ResponsiveHelper.sp(18, context),
+              fontSize: isTablet
+                  ? ResponsiveHelper.sp(20, context)
+                  : ResponsiveHelper.sp(18, context),
               fontWeight: FontWeight.bold,
-              color: AppTheme.errorColor,
+              color: Theme.of(context).colorScheme.error,
             ),
           ),
           SizedBox(height: ResponsiveHelper.h(8, context)),
@@ -187,11 +188,10 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
               message,
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize:
-                    isTablet
-                        ? ResponsiveHelper.sp(16, context)
-                        : ResponsiveHelper.sp(14, context),
-                color: Colors.grey[700],
+                fontSize: isTablet
+                    ? ResponsiveHelper.sp(16, context)
+                    : ResponsiveHelper.sp(14, context),
+                color: Theme.of(context).textTheme.bodyMedium?.color,
               ),
             ),
           ),

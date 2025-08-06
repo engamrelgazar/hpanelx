@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:hpanelx/src/modules/startup/domain/usecases/check_token_usecase.dart';
 import 'package:hpanelx/src/modules/startup/domain/usecases/remove_token_usecase.dart';
 import 'package:hpanelx/src/modules/startup/domain/usecases/save_token_usecase.dart';
+import 'package:hpanelx/src/modules/startup/domain/usecases/validate_token_usecase.dart';
 
 part 'startup_event.dart';
 part 'startup_state.dart';
@@ -11,17 +12,20 @@ class StartupBloc extends Bloc<StartupEvent, StartupState> {
   final CheckTokenUseCase checkTokenUseCase;
   final SaveTokenUseCase saveTokenUseCase;
   final RemoveTokenUseCase removeTokenUseCase;
+  final ValidateTokenUseCase validateTokenUseCase;
   bool _isTokenVisible = false;
 
   StartupBloc({
     required this.checkTokenUseCase,
     required this.saveTokenUseCase,
     required this.removeTokenUseCase,
+    required this.validateTokenUseCase,
   }) : super(StartupInitial()) {
     on<CheckTokenEvent>(_onCheckToken);
     on<SaveTokenEvent>(_onSaveToken);
     on<ToggleTokenVisibilityEvent>(_onToggleTokenVisibility);
     on<LogoutEvent>(_onLogout);
+    on<ValidateTokenEvent>(_onValidateToken);
   }
 
   Future<void> _onCheckToken(
@@ -73,6 +77,20 @@ class StartupBloc extends Bloc<StartupEvent, StartupState> {
     result.fold(
       (failure) => emit(StartupError(message: failure.message)),
       (_) => emit(LogoutSuccess()),
+    );
+  }
+
+  Future<void> _onValidateToken(
+    ValidateTokenEvent event,
+    Emitter<StartupState> emit,
+  ) async {
+    emit(StartupLoading());
+
+    final result = await validateTokenUseCase();
+
+    result.fold(
+      (failure) => emit(TokenValidated(isValid: false)),
+      (isValid) => emit(TokenValidated(isValid: isValid)),
     );
   }
 }

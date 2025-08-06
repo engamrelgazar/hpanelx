@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hpanelx/src/core/theme/theme_cubit.dart';
 import 'package:hpanelx/src/modules/home/presentation/widgets/about_bottom_sheet.dart';
 import 'package:hpanelx/src/modules/startup/presentation/bloc/startup_bloc.dart';
 
@@ -83,7 +84,28 @@ class AppDrawer extends StatelessWidget {
               Navigator.pushNamed(context, '/billing/subscriptions');
             },
           ),
+          ListTile(
+            leading: const Icon(Icons.credit_card_outlined),
+            title: const Text('Payment Methods'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, '/billing/payment-methods');
+            },
+          ),
           const Divider(),
+          BlocBuilder<ThemeCubit, AppThemeMode>(
+            builder: (context, themeMode) {
+              final isDark = Theme.of(context).brightness == Brightness.dark;
+              return ListTile(
+                leading: Icon(isDark ? Icons.light_mode : Icons.dark_mode),
+                title: Text(isDark ? 'Light Mode' : 'Dark Mode'),
+                onTap: () {
+                  Navigator.pop(context);
+                  context.read<ThemeCubit>().toggleTheme();
+                },
+              );
+            },
+          ),
           ListTile(
             leading: const Icon(Icons.info_outline),
             title: const Text('About'),

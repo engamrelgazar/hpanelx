@@ -59,10 +59,11 @@ class AboutBottomSheet extends StatelessWidget {
             const SizedBox(height: 8),
             // App Version
             Text(
-              'Version 1.0.0',
+              'Version 1.0.1',
               style: Theme.of(
                 context,
-              ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
+              ).textTheme.bodyMedium?.copyWith(
+                  color: Theme.of(context).textTheme.bodyMedium?.color),
             ),
             const SizedBox(height: 24),
             // Description
@@ -83,7 +84,7 @@ class AboutBottomSheet extends StatelessWidget {
             const SizedBox(height: 16),
             // Developer Name
             Text(
-              'Amr Elgazar',
+              'MarketAix',
               style: Theme.of(
                 context,
               ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
@@ -95,19 +96,19 @@ class AboutBottomSheet extends StatelessWidget {
               children: [
                 _SocialButton(
                   icon: Icons.language,
-                  onPressed: () => _launchURL('https://amrelgazar.com'),
+                  onPressed: () => _launchURL('https://marketaix.com/'),
                 ),
                 const SizedBox(width: 16),
                 _SocialButton(
                   icon: Icons.facebook,
-                  onPressed: () =>
-                      _launchURL('https://www.facebook.com/elgazarTech/'),
+                  onPressed: () => _launchURL(
+                      'https://www.facebook.com/profile.php?id=61568838646748'),
                 ),
                 const SizedBox(width: 16),
                 _SocialButton(
                   icon: Icons.link,
                   onPressed: () => _launchURL(
-                      'https://www.linkedin.com/in/amr-ahmed-elgazar/'),
+                      'https://www.linkedin.com/company/marketaix-agency'),
                 ),
                 const SizedBox(width: 16),
                 _SocialButton(
@@ -116,7 +117,7 @@ class AboutBottomSheet extends StatelessWidget {
                     color: Theme.of(context).primaryColor,
                     size: 24,
                   ),
-                  onPressed: () => _launchURL('http://wa.me/201030691425'),
+                  onPressed: () => _launchURL('http://wa.me/201500667828'),
                 ),
               ],
             ),

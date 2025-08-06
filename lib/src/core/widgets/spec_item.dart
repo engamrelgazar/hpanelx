@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hpanelx/src/core/theme/app_theme.dart';
 import 'package:hpanelx/src/core/utils/responsive_helper.dart';
 
 class SpecItem extends StatelessWidget {
@@ -28,37 +27,32 @@ class SpecItem extends StatelessWidget {
       children: [
         Icon(
           icon,
-          size:
-              isTablet
-                  ? ResponsiveHelper.responsiveIconSize(context, 20)
-                  : ResponsiveHelper.responsiveIconSize(context, 18),
-          color: iconColor ?? Colors.grey[600],
+          size: isTablet
+              ? ResponsiveHelper.responsiveIconSize(context, 20)
+              : ResponsiveHelper.responsiveIconSize(context, 18),
+          color: iconColor ?? Theme.of(context).textTheme.bodyMedium?.color,
         ),
         SizedBox(height: ResponsiveHelper.h(4, context)),
         Text(
           label,
-          style:
-              labelStyle ??
+          style: labelStyle ??
               TextStyle(
-                fontSize:
-                    isTablet
-                        ? ResponsiveHelper.responsiveFontSize(context, 12)
-                        : ResponsiveHelper.responsiveFontSize(context, 10),
-                color: Colors.grey[600],
+                fontSize: isTablet
+                    ? ResponsiveHelper.responsiveFontSize(context, 12)
+                    : ResponsiveHelper.responsiveFontSize(context, 10),
+                color: Theme.of(context).textTheme.bodySmall?.color,
               ),
         ),
         SizedBox(height: ResponsiveHelper.h(2, context)),
         Text(
           value,
-          style:
-              valueStyle ??
+          style: valueStyle ??
               TextStyle(
-                fontSize:
-                    isTablet
-                        ? ResponsiveHelper.responsiveFontSize(context, 14)
-                        : ResponsiveHelper.responsiveFontSize(context, 12),
+                fontSize: isTablet
+                    ? ResponsiveHelper.responsiveFontSize(context, 14)
+                    : ResponsiveHelper.responsiveFontSize(context, 12),
                 fontWeight: FontWeight.bold,
-                color: AppTheme.darkColor,
+                color: Theme.of(context).textTheme.bodyLarge?.color,
               ),
         ),
       ],

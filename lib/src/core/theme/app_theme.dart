@@ -165,11 +165,11 @@ class AppTheme {
       useMaterial3: true,
       brightness: Brightness.dark,
       primaryColor: primaryColor,
-      scaffoldBackgroundColor: const Color(0xFF121212),
+      scaffoldBackgroundColor: const Color(0xFF0D1117),
       colorScheme: const ColorScheme.dark(
         primary: primaryColor,
         secondary: secondaryColor,
-        surface: Color(0xFF1E1E1E),
+        surface: Color(0xFF1C2128),
         error: errorColor,
         onPrimary: Colors.white,
         onSecondary: Colors.white,
@@ -177,7 +177,7 @@ class AppTheme {
         onError: Colors.white,
       ),
       appBarTheme: const AppBarTheme(
-        backgroundColor: Color(0xFF1E1E1E),
+        backgroundColor: Color(0xFF161B22),
         elevation: elevationNone,
         iconTheme: IconThemeData(color: Colors.white),
         titleTextStyle: TextStyle(
@@ -192,7 +192,7 @@ class AppTheme {
         ),
       ),
       cardTheme: CardThemeData(
-        color: const Color(0xFF1E1E1E),
+        color: const Color(0xFF1C2128),
         elevation: elevationSmall,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(borderRadiusMedium),
@@ -211,7 +211,7 @@ class AppTheme {
       ),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
-          foregroundColor: primaryColor,
+          foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadiusMedium),
           ),
@@ -219,8 +219,8 @@ class AppTheme {
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          foregroundColor: primaryColor,
-          side: const BorderSide(color: primaryColor, width: 1.5),
+          foregroundColor: Colors.white,
+          side: const BorderSide(color: Colors.white, width: 1.5),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadiusLarge),
           ),
@@ -228,16 +228,16 @@ class AppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: const Color(0xFF2D2D2D),
+        fillColor: const Color(0xFF2D333B),
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadiusLarge),
-          borderSide: BorderSide(color: primaryColor.withAlpha(51)),
+          borderSide: const BorderSide(color: Color(0xFF525861)),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadiusLarge),
-          borderSide: BorderSide(color: primaryColor.withAlpha(51)),
+          borderSide: const BorderSide(color: Color(0xFF525861)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadiusLarge),
@@ -245,24 +245,24 @@ class AppTheme {
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadiusLarge),
-          borderSide: BorderSide(color: errorColor.withAlpha(51)),
+          borderSide: const BorderSide(color: errorColor),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadiusLarge),
           borderSide: const BorderSide(color: errorColor, width: 2),
         ),
-        hintStyle: const TextStyle(color: Color(0xFFAAAAAA)),
-        labelStyle: const TextStyle(color: Color(0xFFAAAAAA)),
+        hintStyle: const TextStyle(color: Color(0xFFFAFAFA)),
+        labelStyle: const TextStyle(color: Colors.white),
         errorStyle: const TextStyle(color: errorColor),
       ),
       textTheme: _getTextTheme(isDark: true),
       dividerTheme: const DividerThemeData(
-        color: Color(0xFF3D3D3D),
+        color: Color(0xFF525861),
         thickness: 1,
         space: 1,
       ),
       snackBarTheme: SnackBarThemeData(
-        backgroundColor: const Color(0xFF323232),
+        backgroundColor: const Color(0xFF21262D),
         contentTextStyle: const TextStyle(color: Colors.white),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(borderRadiusMedium),
@@ -278,6 +278,8 @@ class AppTheme {
   /// Generate responsive text theme
   static TextTheme _getTextTheme({bool isDark = false}) {
     final Color textColor = isDark ? Colors.white : textPrimary;
+    final Color secondaryTextColor =
+        isDark ? const Color(0xFFFAFAFA) : textSecondary;
 
     return TextTheme(
       displayLarge: TextStyle(
@@ -333,12 +335,12 @@ class AppTheme {
       bodyMedium: TextStyle(
         fontSize: 14,
         fontWeight: FontWeight.normal,
-        color: textColor,
+        color: secondaryTextColor,
       ),
       bodySmall: TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.normal,
-        color: textColor,
+        color: secondaryTextColor,
       ),
       labelLarge: TextStyle(
         fontSize: 14,

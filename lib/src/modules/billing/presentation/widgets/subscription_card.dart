@@ -38,11 +38,11 @@ class SubscriptionCard extends StatelessWidget {
                     child: Text(
                       subscription.name,
                       style: TextStyle(
-                        fontSize:
-                            isTablet
-                                ? ResponsiveHelper.sp(18, context)
-                                : ResponsiveHelper.sp(16, context),
+                        fontSize: isTablet
+                            ? ResponsiveHelper.sp(18, context)
+                            : ResponsiveHelper.sp(16, context),
                         fontWeight: FontWeight.bold,
+                        color: Theme.of(context).textTheme.titleLarge?.color,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -71,16 +71,14 @@ class SubscriptionCard extends StatelessWidget {
                         SizedBox(height: ResponsiveHelper.h(8, context)),
                         InfoItem(
                           icon: Icons.autorenew,
-                          text:
-                              subscription.isAutoRenewed
-                                  ? 'Auto-renewal on'
-                                  : 'Auto-renewal off',
+                          text: subscription.isAutoRenewed
+                              ? 'Auto-renewal on'
+                              : 'Auto-renewal off',
                           label: 'Renewal',
                           isTablet: isTablet,
-                          iconColor:
-                              subscription.isAutoRenewed
-                                  ? Colors.green
-                                  : Colors.red,
+                          iconColor: subscription.isAutoRenewed
+                              ? Colors.green
+                              : Colors.red,
                         ),
                       ],
                     ),

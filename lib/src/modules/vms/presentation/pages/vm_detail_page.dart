@@ -62,19 +62,17 @@ class _VmDetailPageState extends State<VmDetailPage> {
                     Icon(
                       Icons.error_outline,
                       color: AppTheme.errorColor,
-                      size:
-                          isTablet
-                              ? ResponsiveHelper.sp(64, context)
-                              : ResponsiveHelper.sp(48, context),
+                      size: isTablet
+                          ? ResponsiveHelper.sp(64, context)
+                          : ResponsiveHelper.sp(48, context),
                     ),
                     SizedBox(height: ResponsiveHelper.h(16, context)),
                     Text(
                       'Error loading VM details',
                       style: TextStyle(
-                        fontSize:
-                            isTablet
-                                ? ResponsiveHelper.sp(18, context)
-                                : ResponsiveHelper.sp(16, context),
+                        fontSize: isTablet
+                            ? ResponsiveHelper.sp(18, context)
+                            : ResponsiveHelper.sp(16, context),
                         fontWeight: FontWeight.bold,
                         color: AppTheme.errorColor,
                       ),
@@ -88,11 +86,10 @@ class _VmDetailPageState extends State<VmDetailPage> {
                         state.message,
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize:
-                              isTablet
-                                  ? ResponsiveHelper.sp(16, context)
-                                  : ResponsiveHelper.sp(14, context),
-                          color: Colors.grey[700],
+                          fontSize: isTablet
+                              ? ResponsiveHelper.sp(16, context)
+                              : ResponsiveHelper.sp(14, context),
+                          color: Theme.of(context).textTheme.bodyMedium?.color,
                         ),
                       ),
                     ),
@@ -100,8 +97,8 @@ class _VmDetailPageState extends State<VmDetailPage> {
                     ElevatedButton.icon(
                       onPressed: () {
                         context.read<VmsCubit>().getVirtualMachineById(
-                          widget.vmId,
-                        );
+                              widget.vmId,
+                            );
                       },
                       icon: const Icon(Icons.refresh),
                       label: const Text('Retry'),
@@ -207,38 +204,47 @@ class _VmDetailPageState extends State<VmDetailPage> {
           SizedBox(height: ResponsiveHelper.h(24, context)),
 
           // VM Information
-          _buildInfoSection('VM Information', [
-            _buildInfoItem('Hostname', vm.hostname, isTablet),
-            _buildInfoItem('Plan', vm.plan, isTablet),
-            _buildInfoItem('Status', vm.state, isTablet),
-            _buildInfoItem(
-              'Creation Date',
-              _formatDate(vm.createdAt),
-              isTablet,
-            ),
-          ], isTablet),
+          _buildInfoSection(
+              'VM Information',
+              [
+                _buildInfoItem('Hostname', vm.hostname, isTablet),
+                _buildInfoItem('Plan', vm.plan, isTablet),
+                _buildInfoItem('Status', vm.state, isTablet),
+                _buildInfoItem(
+                  'Creation Date',
+                  _formatDate(vm.createdAt),
+                  isTablet,
+                ),
+              ],
+              isTablet),
 
           SizedBox(height: ResponsiveHelper.h(16, context)),
 
           // Hardware Specifications
-          _buildInfoSection('Hardware Specifications', [
-            _buildInfoItem('CPU', '${vm.cpus} Cores', isTablet),
-            _buildInfoItem('RAM', _formatMemory(vm.memory), isTablet),
-            _buildInfoItem('Storage', _formatStorage(vm.disk), isTablet),
-            _buildInfoItem(
-              'Bandwidth',
-              _formatBandwidth(vm.bandwidth),
-              isTablet,
-            ),
-          ], isTablet),
+          _buildInfoSection(
+              'Hardware Specifications',
+              [
+                _buildInfoItem('CPU', '${vm.cpus} Cores', isTablet),
+                _buildInfoItem('RAM', _formatMemory(vm.memory), isTablet),
+                _buildInfoItem('Storage', _formatStorage(vm.disk), isTablet),
+                _buildInfoItem(
+                  'Bandwidth',
+                  _formatBandwidth(vm.bandwidth),
+                  isTablet,
+                ),
+              ],
+              isTablet),
 
           SizedBox(height: ResponsiveHelper.h(16, context)),
 
           // Network Information
-          _buildInfoSection('Network Information', [
-            _buildInfoItem('Name Server 1', vm.ns1, isTablet),
-            _buildInfoItem('Name Server 2', vm.ns2, isTablet),
-          ], isTablet),
+          _buildInfoSection(
+              'Network Information',
+              [
+                _buildInfoItem('Name Server 1', vm.ns1, isTablet),
+                _buildInfoItem('Name Server 2', vm.ns2, isTablet),
+              ],
+              isTablet),
 
           SizedBox(height: ResponsiveHelper.h(16, context)),
 
@@ -248,15 +254,18 @@ class _VmDetailPageState extends State<VmDetailPage> {
           SizedBox(height: ResponsiveHelper.h(16, context)),
 
           // Template Information
-          _buildInfoSection('OS Template', [
-            _buildInfoItem('Template', vm.template.name, isTablet),
-            _buildInfoItem(
-              'Description',
-              vm.template.description,
-              isTablet,
-              maxLines: 5,
-            ),
-          ], isTablet),
+          _buildInfoSection(
+              'OS Template',
+              [
+                _buildInfoItem('Template', vm.template.name, isTablet),
+                _buildInfoItem(
+                  'Description',
+                  vm.template.description,
+                  isTablet,
+                  maxLines: 5,
+                ),
+              ],
+              isTablet),
 
           SizedBox(height: ResponsiveHelper.h(24, context)),
         ],
@@ -309,10 +318,9 @@ class _VmDetailPageState extends State<VmDetailPage> {
                             Icon(
                               _getStatusIcon(vm.state),
                               color: _getStatusColor(vm.state),
-                              size:
-                                  isTablet
-                                      ? ResponsiveHelper.sp(24, context)
-                                      : ResponsiveHelper.sp(20, context),
+                              size: isTablet
+                                  ? ResponsiveHelper.sp(24, context)
+                                  : ResponsiveHelper.sp(20, context),
                             ),
                             SizedBox(width: ResponsiveHelper.w(8, context)),
                             Text(
@@ -320,10 +328,9 @@ class _VmDetailPageState extends State<VmDetailPage> {
                               style: TextStyle(
                                 color: _getStatusColor(vm.state),
                                 fontWeight: FontWeight.bold,
-                                fontSize:
-                                    isTablet
-                                        ? ResponsiveHelper.sp(16, context)
-                                        : ResponsiveHelper.sp(14, context),
+                                fontSize: isTablet
+                                    ? ResponsiveHelper.sp(16, context)
+                                    : ResponsiveHelper.sp(14, context),
                               ),
                             ),
                           ],
@@ -336,17 +343,16 @@ class _VmDetailPageState extends State<VmDetailPage> {
                     state: vm.state,
                     isLoading: isLoading,
                     currentAction: action,
-                    onStart:
-                        () =>
-                            context.read<VmsCubit>().startVirtualMachine(vm.id),
-                    onReboot:
-                        () => context.read<VmsCubit>().rebootVirtualMachine(
-                          vm.id,
-                        ),
-                    onShutdown:
-                        () => context.read<VmsCubit>().shutdownVirtualMachine(
-                          vm.id,
-                        ),
+                    onStart: () =>
+                        context.read<VmsCubit>().startVirtualMachine(vm.id),
+                    onReboot: () =>
+                        context.read<VmsCubit>().rebootVirtualMachine(
+                              vm.id,
+                            ),
+                    onShutdown: () =>
+                        context.read<VmsCubit>().shutdownVirtualMachine(
+                              vm.id,
+                            ),
                     isTablet: isTablet,
                   ),
                   if (isLoading) ...[
@@ -354,11 +360,10 @@ class _VmDetailPageState extends State<VmDetailPage> {
                     Text(
                       _getActionText(action ?? ''),
                       style: TextStyle(
-                        color: Colors.grey[700],
-                        fontSize:
-                            isTablet
-                                ? ResponsiveHelper.sp(16, context)
-                                : ResponsiveHelper.sp(14, context),
+                        color: Theme.of(context).textTheme.bodyMedium?.color,
+                        fontSize: isTablet
+                            ? ResponsiveHelper.sp(16, context)
+                            : ResponsiveHelper.sp(14, context),
                       ),
                     ),
                   ],
@@ -370,30 +375,36 @@ class _VmDetailPageState extends State<VmDetailPage> {
           SizedBox(height: ResponsiveHelper.h(24, context)),
 
           // Display the same VM details as in _buildVmDetails but without rebuilding action buttons
-          _buildInfoSection('VM Information', [
-            _buildInfoItem('Hostname', vm.hostname, isTablet),
-            _buildInfoItem('Plan', vm.plan, isTablet),
-            _buildInfoItem('Status', vm.state, isTablet),
-            _buildInfoItem(
-              'Creation Date',
-              _formatDate(vm.createdAt),
-              isTablet,
-            ),
-          ], isTablet),
+          _buildInfoSection(
+              'VM Information',
+              [
+                _buildInfoItem('Hostname', vm.hostname, isTablet),
+                _buildInfoItem('Plan', vm.plan, isTablet),
+                _buildInfoItem('Status', vm.state, isTablet),
+                _buildInfoItem(
+                  'Creation Date',
+                  _formatDate(vm.createdAt),
+                  isTablet,
+                ),
+              ],
+              isTablet),
 
           SizedBox(height: ResponsiveHelper.h(16, context)),
 
           // Hardware Specifications
-          _buildInfoSection('Hardware Specifications', [
-            _buildInfoItem('CPU', '${vm.cpus} Cores', isTablet),
-            _buildInfoItem('RAM', _formatMemory(vm.memory), isTablet),
-            _buildInfoItem('Storage', _formatStorage(vm.disk), isTablet),
-            _buildInfoItem(
-              'Bandwidth',
-              _formatBandwidth(vm.bandwidth),
-              isTablet,
-            ),
-          ], isTablet),
+          _buildInfoSection(
+              'Hardware Specifications',
+              [
+                _buildInfoItem('CPU', '${vm.cpus} Cores', isTablet),
+                _buildInfoItem('RAM', _formatMemory(vm.memory), isTablet),
+                _buildInfoItem('Storage', _formatStorage(vm.disk), isTablet),
+                _buildInfoItem(
+                  'Bandwidth',
+                  _formatBandwidth(vm.bandwidth),
+                  isTablet,
+                ),
+              ],
+              isTablet),
 
           SizedBox(height: ResponsiveHelper.h(16, context)),
 
@@ -435,10 +446,9 @@ class _VmDetailPageState extends State<VmDetailPage> {
                       Icon(
                         _getStatusIcon(vm.state),
                         color: _getStatusColor(vm.state),
-                        size:
-                            isTablet
-                                ? ResponsiveHelper.sp(24, context)
-                                : ResponsiveHelper.sp(20, context),
+                        size: isTablet
+                            ? ResponsiveHelper.sp(24, context)
+                            : ResponsiveHelper.sp(20, context),
                       ),
                       SizedBox(width: ResponsiveHelper.w(8, context)),
                       Text(
@@ -446,10 +456,9 @@ class _VmDetailPageState extends State<VmDetailPage> {
                         style: TextStyle(
                           color: _getStatusColor(vm.state),
                           fontWeight: FontWeight.bold,
-                          fontSize:
-                              isTablet
-                                  ? ResponsiveHelper.sp(16, context)
-                                  : ResponsiveHelper.sp(14, context),
+                          fontSize: isTablet
+                              ? ResponsiveHelper.sp(16, context)
+                              : ResponsiveHelper.sp(14, context),
                         ),
                       ),
                     ],
@@ -461,12 +470,12 @@ class _VmDetailPageState extends State<VmDetailPage> {
             VmActionButtons(
               state: vm.state,
               isLoading: false,
-              onStart:
-                  () => context.read<VmsCubit>().startVirtualMachine(vm.id),
-              onReboot:
-                  () => context.read<VmsCubit>().rebootVirtualMachine(vm.id),
-              onShutdown:
-                  () => context.read<VmsCubit>().shutdownVirtualMachine(vm.id),
+              onStart: () =>
+                  context.read<VmsCubit>().startVirtualMachine(vm.id),
+              onReboot: () =>
+                  context.read<VmsCubit>().rebootVirtualMachine(vm.id),
+              onShutdown: () =>
+                  context.read<VmsCubit>().shutdownVirtualMachine(vm.id),
               isTablet: isTablet,
             ),
           ],
@@ -488,13 +497,11 @@ class _VmDetailPageState extends State<VmDetailPage> {
             Text(
               title,
               style: TextStyle(
-                fontSize:
-                    isTablet
-                        ? ResponsiveHelper.sp(20, context)
-                        : ResponsiveHelper.sp(18, context),
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).primaryColor
-              ),
+                  fontSize: isTablet
+                      ? ResponsiveHelper.sp(20, context)
+                      : ResponsiveHelper.sp(18, context),
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).primaryColor),
             ),
             Divider(height: ResponsiveHelper.h(24, context)),
             ...items,
@@ -520,11 +527,10 @@ class _VmDetailPageState extends State<VmDetailPage> {
             child: Text(
               label,
               style: TextStyle(
-                fontSize:
-                    isTablet
-                        ? ResponsiveHelper.sp(16, context)
-                        : ResponsiveHelper.sp(14, context),
-                color: Colors.grey[700],
+                fontSize: isTablet
+                    ? ResponsiveHelper.sp(16, context)
+                    : ResponsiveHelper.sp(14, context),
+                color: Theme.of(context).textTheme.bodyMedium?.color,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -534,11 +540,10 @@ class _VmDetailPageState extends State<VmDetailPage> {
             child: Text(
               value,
               style: TextStyle(
-                fontSize:
-                    isTablet
-                        ? ResponsiveHelper.sp(16, context)
-                        : ResponsiveHelper.sp(14, context),
-                color: AppTheme.darkColor,
+                fontSize: isTablet
+                    ? ResponsiveHelper.sp(16, context)
+                    : ResponsiveHelper.sp(14, context),
+                color: Theme.of(context).textTheme.bodyLarge?.color,
               ),
               maxLines: maxLines,
               overflow: TextOverflow.ellipsis,
@@ -562,13 +567,11 @@ class _VmDetailPageState extends State<VmDetailPage> {
             Text(
               'IP Addresses',
               style: TextStyle(
-                fontSize:
-                    isTablet
-                        ? ResponsiveHelper.sp(20, context)
-                        : ResponsiveHelper.sp(18, context),
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).primaryColor
-              ),
+                  fontSize: isTablet
+                      ? ResponsiveHelper.sp(20, context)
+                      : ResponsiveHelper.sp(18, context),
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).primaryColor),
             ),
             Divider(height: ResponsiveHelper.h(24, context)),
             // IPv4 Addresses
@@ -576,12 +579,11 @@ class _VmDetailPageState extends State<VmDetailPage> {
               Text(
                 'IPv4',
                 style: TextStyle(
-                  fontSize:
-                      isTablet
-                          ? ResponsiveHelper.sp(16, context)
-                          : ResponsiveHelper.sp(14, context),
+                  fontSize: isTablet
+                      ? ResponsiveHelper.sp(16, context)
+                      : ResponsiveHelper.sp(14, context),
                   fontWeight: FontWeight.w600,
-                  color: Colors.grey[800],
+                  color: Theme.of(context).textTheme.titleMedium?.color,
                 ),
               ),
               SizedBox(height: ResponsiveHelper.h(8, context)),
@@ -593,12 +595,11 @@ class _VmDetailPageState extends State<VmDetailPage> {
               Text(
                 'IPv6',
                 style: TextStyle(
-                  fontSize:
-                      isTablet
-                          ? ResponsiveHelper.sp(16, context)
-                          : ResponsiveHelper.sp(14, context),
+                  fontSize: isTablet
+                      ? ResponsiveHelper.sp(16, context)
+                      : ResponsiveHelper.sp(14, context),
                   fontWeight: FontWeight.w600,
-                  color: Colors.grey[800],
+                  color: Theme.of(context).textTheme.titleMedium?.color,
                 ),
               ),
               SizedBox(height: ResponsiveHelper.h(8, context)),
@@ -608,11 +609,10 @@ class _VmDetailPageState extends State<VmDetailPage> {
               Text(
                 'No IP addresses assigned',
                 style: TextStyle(
-                  fontSize:
-                      isTablet
-                          ? ResponsiveHelper.sp(16, context)
-                          : ResponsiveHelper.sp(14, context),
-                  color: Colors.grey[700],
+                  fontSize: isTablet
+                      ? ResponsiveHelper.sp(16, context)
+                      : ResponsiveHelper.sp(14, context),
+                  color: Theme.of(context).textTheme.bodyMedium?.color,
                   fontStyle: FontStyle.italic,
                 ),
               ),
@@ -629,11 +629,10 @@ class _VmDetailPageState extends State<VmDetailPage> {
         children: [
           Icon(
             Icons.lan,
-            size:
-                isTablet
-                    ? ResponsiveHelper.sp(20, context)
-                    : ResponsiveHelper.sp(18, context),
-            color: Colors.blue,
+            size: isTablet
+                ? ResponsiveHelper.sp(20, context)
+                : ResponsiveHelper.sp(18, context),
+            color: Theme.of(context).primaryColor,
           ),
           SizedBox(width: ResponsiveHelper.w(8, context)),
           Expanded(
@@ -643,11 +642,10 @@ class _VmDetailPageState extends State<VmDetailPage> {
                 Text(
                   ip.address,
                   style: TextStyle(
-                    fontSize:
-                        isTablet
-                            ? ResponsiveHelper.sp(16, context)
-                            : ResponsiveHelper.sp(14, context),
-                    color: AppTheme.darkColor,
+                    fontSize: isTablet
+                        ? ResponsiveHelper.sp(16, context)
+                        : ResponsiveHelper.sp(14, context),
+                    color: Theme.of(context).textTheme.bodyLarge?.color,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -655,11 +653,10 @@ class _VmDetailPageState extends State<VmDetailPage> {
                   Text(
                     'PTR: ${ip.ptr}',
                     style: TextStyle(
-                      fontSize:
-                          isTablet
-                              ? ResponsiveHelper.sp(14, context)
-                              : ResponsiveHelper.sp(12, context),
-                      color: Colors.grey[600],
+                      fontSize: isTablet
+                          ? ResponsiveHelper.sp(14, context)
+                          : ResponsiveHelper.sp(12, context),
+                      color: Theme.of(context).textTheme.bodySmall?.color,
                     ),
                   ),
               ],
@@ -671,10 +668,9 @@ class _VmDetailPageState extends State<VmDetailPage> {
               // Copy IP address to clipboard
               // You can implement this functionality
             },
-            iconSize:
-                isTablet
-                    ? ResponsiveHelper.sp(20, context)
-                    : ResponsiveHelper.sp(18, context),
+            iconSize: isTablet
+                ? ResponsiveHelper.sp(20, context)
+                : ResponsiveHelper.sp(18, context),
             color: Theme.of(context).primaryColor,
             tooltip: 'Copy IP address',
           ),

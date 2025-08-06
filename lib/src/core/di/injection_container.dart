@@ -11,6 +11,7 @@ import 'package:hpanelx/src/modules/startup/domain/repositories/auth_repository.
 import 'package:hpanelx/src/modules/startup/domain/usecases/check_token_usecase.dart';
 import 'package:hpanelx/src/modules/startup/domain/usecases/remove_token_usecase.dart';
 import 'package:hpanelx/src/modules/startup/domain/usecases/save_token_usecase.dart';
+import 'package:hpanelx/src/modules/startup/domain/usecases/validate_token_usecase.dart';
 import 'package:hpanelx/src/modules/startup/data/repositories/auth_repository_impl.dart';
 import 'package:hpanelx/src/modules/startup/data/datasources/auth_local_datasource.dart';
 import 'package:hpanelx/src/modules/startup/presentation/bloc/startup_bloc.dart';
@@ -31,16 +32,17 @@ import 'package:hpanelx/src/modules/domains/domain/usecases/get_domains_usecase.
 import 'package:hpanelx/src/modules/domains/domain/usecases/check_domain_availability_usecase.dart';
 import 'package:hpanelx/src/modules/domains/domain/usecases/get_whois_usecase.dart';
 import 'package:hpanelx/src/modules/domains/presentation/bloc/domains_bloc.dart';
-import 'package:hpanelx/src/modules/domains/presentation/cubit/domain_checker_cubit.dart';
-import 'package:hpanelx/src/modules/domains/presentation/cubit/domain_checker_sheet_cubit.dart';
-import 'package:hpanelx/src/modules/domains/presentation/cubit/domain_search_cubit.dart';
 
 // Billing module imports
 import 'package:hpanelx/src/modules/billing/data/datasources/billing_remote_datasource.dart';
 import 'package:hpanelx/src/modules/billing/data/repositories/billing_repository_impl.dart';
 import 'package:hpanelx/src/modules/billing/domain/repositories/billing_repository.dart';
 import 'package:hpanelx/src/modules/billing/domain/usecases/get_subscriptions_usecase.dart';
+import 'package:hpanelx/src/modules/billing/domain/usecases/get_payment_methods_usecase.dart';
+import 'package:hpanelx/src/modules/billing/domain/usecases/delete_payment_method_usecase.dart';
+import 'package:hpanelx/src/modules/billing/domain/usecases/set_default_payment_method_usecase.dart';
 import 'package:hpanelx/src/modules/billing/presentation/cubit/billing_cubit.dart';
+import 'package:hpanelx/src/modules/billing/presentation/cubit/payment_methods_cubit.dart';
 
 import 'package:hpanelx/src/core/api/api_client.dart';
 
@@ -66,7 +68,7 @@ Future<void> init() async {
 
   // Core
   sl.registerSingleton<AppRouter>(AppRouterImpl());
-  sl.registerSingleton<ApiClient>(ApiClient());
+  sl.registerSingleton<ApiClient>(ApiClient(sharedPreferences: sl()));
 
   // Theme
   sl.registerSingleton<ThemeCubit>(ThemeCubit(sl()));
@@ -89,7 +91,10 @@ Future<void> init() async {
 
   // Repositories
   sl.registerSingleton<AuthRepository>(
-    AuthRepositoryImpl(localDataSource: sl()),
+    AuthRepositoryImpl(
+      localDataSource: sl(),
+      apiClient: sl(),
+    ),
   );
 
   sl.registerSingleton<HomeRepository>(
@@ -110,6 +115,7 @@ Future<void> init() async {
   sl.registerSingleton<CheckTokenUseCase>(CheckTokenUseCase(sl()));
   sl.registerSingleton<SaveTokenUseCase>(SaveTokenUseCase(sl()));
   sl.registerSingleton<RemoveTokenUseCase>(RemoveTokenUseCase(sl()));
+  sl.registerSingleton<ValidateTokenUseCase>(ValidateTokenUseCase(sl()));
 
   sl.registerSingleton<GetServersUseCase>(GetServersUseCase(sl()));
   sl.registerSingleton<GetDomainsUseCase>(GetDomainsUseCase(sl()));
@@ -125,9 +131,21 @@ Future<void> init() async {
   // Register the WHOIS use case and cubit
   sl.registerSingleton<GetWhoisUseCase>(GetWhoisUseCase(repository: sl()));
 
-  // Billing use case
+  // Billing use cases
   sl.registerSingleton<GetSubscriptionsUseCase>(
     GetSubscriptionsUseCase(repository: sl()),
+  );
+
+  sl.registerSingleton<GetPaymentMethodsUseCase>(
+    GetPaymentMethodsUseCase(repository: sl()),
+  );
+
+  sl.registerSingleton<DeletePaymentMethodUseCase>(
+    DeletePaymentMethodUseCase(repository: sl()),
+  );
+
+  sl.registerSingleton<SetDefaultPaymentMethodUseCase>(
+    SetDefaultPaymentMethodUseCase(repository: sl()),
   );
 
   // VMs use cases
@@ -157,6 +175,7 @@ Future<void> init() async {
       checkTokenUseCase: sl(),
       saveTokenUseCase: sl(),
       removeTokenUseCase: sl(),
+      validateTokenUseCase: sl(),
     ),
   );
 
@@ -168,21 +187,22 @@ Future<void> init() async {
     ),
   );
 
-  sl.registerFactory<DomainsBloc>(() => DomainsBloc(getDomainsUseCase: sl()));
+  sl.registerFactory<DomainsBloc>(() => DomainsBloc(
+        getDomainsUseCase: sl(),
+        checkDomainAvailabilityUseCase: sl(),
+      ));
 
-  sl.registerFactory<DomainCheckerCubit>(
-    () => DomainCheckerCubit(checkDomainAvailabilityUseCase: sl()),
-  );
-
-  // Register DomainCheckerSheetCubit
-  sl.registerFactory<DomainCheckerSheetCubit>(() => DomainCheckerSheetCubit());
-
-  // Register DomainSearchCubit
-  sl.registerFactory<DomainSearchCubit>(() => DomainSearchCubit());
-
-  // Billing cubit
+  // Billing cubits
   sl.registerFactory<BillingCubit>(
     () => BillingCubit(getSubscriptionsUseCase: sl()),
+  );
+
+  sl.registerFactory<PaymentMethodsCubit>(
+    () => PaymentMethodsCubit(
+      getPaymentMethodsUseCase: sl(),
+      deletePaymentMethodUseCase: sl(),
+      setDefaultPaymentMethodUseCase: sl(),
+    ),
   );
 
   // VMs cubit

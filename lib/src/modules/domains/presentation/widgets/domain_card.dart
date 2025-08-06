@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hpanelx/src/core/theme/app_theme.dart';
 import 'package:hpanelx/src/core/utils/responsive_helper.dart';
 import 'package:hpanelx/src/modules/domains/data/models/domain_model.dart';
 
@@ -66,7 +65,7 @@ class DomainCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: titleSize,
                       fontWeight: FontWeight.bold,
-                      color: AppTheme.darkColor,
+                      color: Theme.of(context).textTheme.titleLarge?.color,
                     ),
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -145,11 +144,15 @@ class DomainCard extends StatelessWidget {
   }) {
     return Row(
       children: [
-        Icon(icon, size: iconSize, color: Colors.grey[600]),
+        Icon(icon,
+            size: iconSize,
+            color: Theme.of(context).textTheme.bodyMedium?.color),
         SizedBox(width: ResponsiveHelper.w(8, context)),
         Text(
           '$label: ',
-          style: TextStyle(fontSize: fontSize, color: Colors.grey[600]),
+          style: TextStyle(
+              fontSize: fontSize,
+              color: Theme.of(context).textTheme.bodyMedium?.color),
         ),
         Expanded(
           child: Text(
@@ -157,7 +160,7 @@ class DomainCard extends StatelessWidget {
             style: TextStyle(
               fontSize: fontSize,
               fontWeight: FontWeight.w500,
-              color: valueColor ?? AppTheme.darkColor,
+              color: valueColor ?? Theme.of(context).textTheme.bodyLarge?.color,
             ),
             overflow: TextOverflow.ellipsis,
           ),

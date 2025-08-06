@@ -50,3 +50,12 @@ class TokenVisibilityState extends StartupState {
 }
 
 class LogoutSuccess extends StartupState {}
+
+class TokenValidated extends StartupState {
+  final bool isValid;
+
+  const TokenValidated({required this.isValid});
+
+  @override
+  List<Object> get props => [isValid];
+}
