@@ -57,7 +57,6 @@ class BillingRemoteDataSourceImpl implements BillingRemoteDataSource {
   @override
   Future<void> setDefaultPaymentMethod(int paymentMethodId) async {
     try {
-      // Try setting default using PUT with the payment method ID in URL
       await apiClient.post(
         '/api/billing/v1/payment-methods/$paymentMethodId',
         data: {

@@ -2,9 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:hpanelx/src/core/api/api_constants.dart';
 import 'package:hpanelx/src/core/error/exceptions.dart';
-import 'dart:io'; // Add this import for InternetAddress
+import 'dart:io';
 
-/// A client for making API requests with proper error handling and authentication.
 class ApiClient {
   final Dio _dio;
   final SharedPreferences _sharedPreferences;
@@ -20,7 +19,6 @@ class ApiClient {
     _initialize();
   }
 
-  /// Configures base Dio options
   void _configureOptions() {
     _dio.options.baseUrl = ApiConstants.baseUrl;
     _dio.options.connectTimeout = const Duration(seconds: 15);
@@ -31,13 +29,11 @@ class ApiClient {
     };
   }
 
-  /// Adds interceptors for authentication and error handling
   void _addInterceptors() {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
           if (_cachedToken == null) {
-            // Try to read token from local storage if not in memory
             _loadTokenFromStorage();
           }
 
@@ -48,43 +44,36 @@ class ApiClient {
           return handler.next(options);
         },
         onError: (DioException error, handler) {
-          // Log the error here if needed
           return handler.next(error);
         },
       ),
     );
   }
 
-  /// Initialize the client by loading the token
   void _initialize() {
     _loadTokenFromStorage();
   }
 
-  /// Loads the authentication token from local storage
   void _loadTokenFromStorage() {
     try {
       _cachedToken = _sharedPreferences.getString(BEARER_TOKEN_KEY);
     } catch (e) {
-      // Handle storage access error
       _cachedToken = null;
     }
   }
 
-  /// Updates the cached token
   void updateToken(String token) {
     _cachedToken = token;
 
     _sharedPreferences.setString(BEARER_TOKEN_KEY, token);
   }
 
-  /// Clears the cached token
   void clearToken() {
     _cachedToken = null;
 
     _sharedPreferences.remove(BEARER_TOKEN_KEY);
   }
 
-  /// Creates or returns an existing cancel token for a given request identifier
   CancelToken getCancelToken(String requestId) {
     if (!_cancelTokens.containsKey(requestId)) {
       _cancelTokens[requestId] = CancelToken();
@@ -92,7 +81,6 @@ class ApiClient {
     return _cancelTokens[requestId]!;
   }
 
-  /// Cancels a request with the specified identifier
   void cancelRequest(String requestId) {
     if (_cancelTokens.containsKey(requestId)) {
       _cancelTokens[requestId]!.cancel('Request cancelled');
@@ -100,7 +88,6 @@ class ApiClient {
     }
   }
 
-  /// Makes a GET request to the specified endpoint
   Future<dynamic> get(
     String endpoint, {
     Map<String, dynamic>? queryParameters,
@@ -122,7 +109,6 @@ class ApiClient {
     }
   }
 
-  /// Makes a POST request to the specified endpoint
   Future<dynamic> post(
     String endpoint, {
     dynamic data,
@@ -146,7 +132,6 @@ class ApiClient {
     }
   }
 
-  /// Makes a PUT request to the specified endpoint
   Future<dynamic> put(
     String endpoint, {
     dynamic data,
@@ -170,7 +155,6 @@ class ApiClient {
     }
   }
 
-  /// Makes a DELETE request to the specified endpoint
   Future<dynamic> delete(
     String endpoint, {
     dynamic data,
@@ -194,7 +178,6 @@ class ApiClient {
     }
   }
 
-  /// Checks if the device has internet connectivity
   Future<bool> _hasInternetConnection() async {
     try {
       final result = await InternetAddress.lookup('google.com');
@@ -204,7 +187,6 @@ class ApiClient {
     }
   }
 
-  /// Handles and translates Dio errors into application-specific exceptions
   Future<Exception> _handleError(DioException error) async {
     switch (error.type) {
       case DioExceptionType.connectionTimeout:

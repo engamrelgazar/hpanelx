@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hpanelx/src/core/utils/responsive_helper.dart';
 
-/// A widget that provides different layouts based on screen size
 class ResponsiveLayout extends StatelessWidget {
-  /// The widget to display on mobile screens
   final Widget mobile;
 
-  /// The widget to display on tablet screens (optional)
   final Widget? tablet;
 
-  /// The widget to display on desktop screens (optional)
   final Widget? desktop;
 
-  /// Creates a responsive layout that adapts to different screen sizes
   const ResponsiveLayout({
     super.key,
     required this.mobile,
@@ -22,7 +17,6 @@ class ResponsiveLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // This ensures we reset the cached size if the orientation or size changes
     ResponsiveHelper.resetCachedSize();
 
     return LayoutBuilder(
@@ -39,23 +33,17 @@ class ResponsiveLayout extends StatelessWidget {
   }
 }
 
-/// A widget that wraps content with responsive padding based on screen size
 class ResponsivePadding extends StatelessWidget {
-  /// The child widget to be wrapped with padding
   final Widget child;
 
-  /// Whether to apply horizontal padding
   final bool horizontal;
 
-  /// Whether to apply vertical padding
   final bool vertical;
 
-  /// Custom padding values by screen size
   final EdgeInsets? mobilePadding;
   final EdgeInsets? tabletPadding;
   final EdgeInsets? desktopPadding;
 
-  /// Creates a widget that applies responsive padding
   const ResponsivePadding({
     super.key,
     required this.child,
@@ -97,21 +85,16 @@ class ResponsivePadding extends StatelessWidget {
   }
 }
 
-/// A widget that creates responsive grid layouts
 class ResponsiveGrid extends StatelessWidget {
-  /// List of child widgets to display in the grid
   final List<Widget> children;
 
-  /// Number of columns for each screen size
   final int mobileColumns;
   final int tabletColumns;
   final int desktopColumns;
 
-  /// Spacing between items
   final double crossAxisSpacing;
   final double mainAxisSpacing;
 
-  /// Creates a responsive grid layout
   const ResponsiveGrid({
     super.key,
     required this.children,

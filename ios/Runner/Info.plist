@@ -63,6 +63,9 @@
 		<string>mailto</string>
 		<string>tel</string>
 		<string>sms</string>
+		<string>fb</string>
+		<string>linkedin</string>
+		<string>whatsapp</string>
 	</array>
 	
 	<!-- Allow arbitrary loads for development (remove in production) -->

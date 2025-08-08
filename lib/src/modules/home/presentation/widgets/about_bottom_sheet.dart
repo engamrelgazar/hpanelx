@@ -5,10 +5,34 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class AboutBottomSheet extends StatelessWidget {
   const AboutBottomSheet({super.key});
 
-  void _launchURL(String url) async {
-    final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
+  void _launchURL(String url, [BuildContext? context]) async {
+    try {
+      final uri = Uri.parse(url);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(
+          uri,
+          mode: LaunchMode.externalApplication,
+        );
+      } else {
+        // Fallback: try to launch without checking
+        await launchUrl(
+          uri,
+          mode: LaunchMode.externalApplication,
+        );
+      }
+    } catch (e) {
+      // Handle the error silently or show a message
+      debugPrint('Could not launch $url: $e');
+
+      // Show a user-friendly message if context is available
+      if (context != null && context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Unable to open link'),
+            backgroundColor: Theme.of(context).colorScheme.error,
+          ),
+        );
+      }
     }
   }
 
@@ -96,19 +120,22 @@ class AboutBottomSheet extends StatelessWidget {
               children: [
                 _SocialButton(
                   icon: Icons.language,
-                  onPressed: () => _launchURL('https://marketaix.com/'),
+                  onPressed: () =>
+                      _launchURL('https://marketaix.com/', context),
                 ),
                 const SizedBox(width: 16),
                 _SocialButton(
                   icon: Icons.facebook,
                   onPressed: () => _launchURL(
-                      'https://www.facebook.com/profile.php?id=61568838646748'),
+                      'https://www.facebook.com/profile.php?id=61568838646748',
+                      context),
                 ),
                 const SizedBox(width: 16),
                 _SocialButton(
                   icon: Icons.link,
                   onPressed: () => _launchURL(
-                      'https://www.linkedin.com/company/marketaix-agency'),
+                      'https://www.linkedin.com/company/marketaix-agency',
+                      context),
                 ),
                 const SizedBox(width: 16),
                 _SocialButton(
@@ -117,7 +144,8 @@ class AboutBottomSheet extends StatelessWidget {
                     color: Theme.of(context).primaryColor,
                     size: 24,
                   ),
-                  onPressed: () => _launchURL('http://wa.me/201500667828'),
+                  onPressed: () =>
+                      _launchURL('http://wa.me/201500667828', context),
                 ),
               ],
             ),

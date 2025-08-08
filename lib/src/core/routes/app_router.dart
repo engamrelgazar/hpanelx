@@ -15,32 +15,25 @@ import 'package:hpanelx/src/modules/billing/presentation/pages/payment_methods_p
 import 'package:hpanelx/src/modules/billing/presentation/cubit/billing_cubit.dart';
 import 'package:hpanelx/src/modules/billing/presentation/cubit/payment_methods_cubit.dart';
 
-/// Route name constants for the application
 class AppRoutes {
-  // Startup routes
   static const String splash = '/';
   static const String tokenInput = '/token';
 
-  // Main routes
   static const String home = '/home';
   static const String domains = '/domains';
   static const String virtualMachines = '/vms';
 
-  // Billing routes
   static const String subscriptions = '/billing/subscriptions';
   static const String paymentMethods = '/billing/payment-methods';
 
-  // Helper methods for navigation
   static String domainDetails(String domainId) => '$domains/$domainId';
   static String vmDetails(String vmId) => '$virtualMachines/$vmId';
 }
 
-/// Router interface
 abstract class AppRouter {
   GoRouter get router;
 }
 
-/// Router implementation
 class AppRouterImpl implements AppRouter {
   final GlobalKey<NavigatorState> _rootNavigatorKey =
       GlobalKey<NavigatorState>(debugLabel: 'root');
@@ -56,23 +49,18 @@ class AppRouterImpl implements AppRouter {
     routes: _buildRoutes(),
   );
 
-  /// Handle redirect logic
   Future<String?> _handleRedirect(
       BuildContext context, GoRouterState state) async {
-    // Skip token check for splash and token input pages
     if (state.matchedLocation == AppRoutes.splash ||
         state.matchedLocation == AppRoutes.tokenInput) {
       return null;
     }
 
-    // Use middleware to check for token
     return await AuthMiddleware.guard(context, state);
   }
 
-  /// Build the application routes
   List<RouteBase> _buildRoutes() {
     return [
-      // Startup routes
       GoRoute(
         path: AppRoutes.splash,
         name: 'splash',
@@ -83,15 +71,11 @@ class AppRouterImpl implements AppRouter {
         name: 'tokenInput',
         builder: (context, state) => const TokenInputPage(),
       ),
-
-      // Home route
       GoRoute(
         path: AppRoutes.home,
         name: 'home',
         builder: (context, state) => const HomePage(),
       ),
-
-      // Domains routes
       GoRoute(
         path: AppRoutes.domains,
         name: 'domains',
@@ -100,8 +84,6 @@ class AppRouterImpl implements AppRouter {
           child: const DomainsPage(),
         ),
       ),
-
-      // Virtual Machines routes
       GoRoute(
         path: AppRoutes.virtualMachines,
         name: 'virtualMachines',
@@ -110,8 +92,6 @@ class AppRouterImpl implements AppRouter {
           child: const VmsPage(),
         ),
       ),
-
-      // Billing routes
       GoRoute(
         path: AppRoutes.subscriptions,
         name: 'subscriptions',
@@ -120,7 +100,6 @@ class AppRouterImpl implements AppRouter {
           child: const SubscriptionsPage(),
         ),
       ),
-
       GoRoute(
         path: AppRoutes.paymentMethods,
         name: 'paymentMethods',

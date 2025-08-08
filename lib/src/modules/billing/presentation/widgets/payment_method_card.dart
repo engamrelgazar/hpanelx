@@ -33,10 +33,8 @@ class PaymentMethodCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header with card info and actions
             Row(
               children: [
-                // Card icon
                 Container(
                   padding: EdgeInsets.all(ResponsiveHelper.w(8, context)),
                   decoration: BoxDecoration(
@@ -52,8 +50,6 @@ class PaymentMethodCard extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: ResponsiveHelper.w(12, context)),
-
-                // Card details
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,12 +98,9 @@ class PaymentMethodCard extends StatelessWidget {
                     ],
                   ),
                 ),
-
-                // Action buttons
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Set Default button (only show if not already default)
                     if (!paymentMethod.isDefault && onSetDefault != null)
                       IconButton(
                         onPressed: isSettingDefault ? null : onSetDefault,
@@ -126,8 +119,6 @@ class PaymentMethodCard extends StatelessWidget {
                               ),
                         tooltip: 'Set as Default',
                       ),
-
-                    // Delete button
                     if (onDelete != null)
                       IconButton(
                         onPressed: isDeleting ? null : onDelete,
@@ -150,8 +141,6 @@ class PaymentMethodCard extends StatelessWidget {
                 ),
               ],
             ),
-
-            // Status
             SizedBox(height: ResponsiveHelper.h(12, context)),
             Row(
               children: [

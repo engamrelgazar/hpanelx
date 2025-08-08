@@ -8,7 +8,6 @@ import 'package:hpanelx/src/core/utils/responsive_helper.dart';
 import 'package:hpanelx/src/modules/home/presentation/bloc/home_bloc.dart';
 import 'package:hpanelx/src/modules/startup/presentation/bloc/startup_bloc.dart';
 
-/// Main application widget that configures global providers and settings
 class Hpanelx extends StatefulWidget {
   const Hpanelx({super.key});
 
@@ -31,11 +30,9 @@ class _HpanelxState extends State<Hpanelx> with WidgetsBindingObserver {
 
   @override
   void didChangeMetrics() {
-    // Reset ResponsiveHelper's cached size when metrics change
     ResponsiveHelper.resetCachedSize();
     super.didChangeMetrics();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -53,20 +50,16 @@ class _HpanelxState extends State<Hpanelx> with WidgetsBindingObserver {
               debugShowCheckedModeBanner: false,
               themeMode: context.read<ThemeCubit>().getThemeMode(),
               theme: AppTheme.lightTheme,
-              darkTheme:AppTheme.darkTheme,
+              darkTheme: AppTheme.darkTheme,
               routerConfig: di.sl<AppRouter>().router,
               builder: (context, child) {
-                // Apply a global font scaling
                 final mediaQuery = MediaQuery.of(context);
 
-                // Get current scale factor and apply clamp
                 final currentScale = mediaQuery.textScaler.scale(1.0);
                 final clampedScale = currentScale.clamp(0.8, 1.2);
 
-                // Create new TextScaler with clamped scale
                 final newTextScaler = TextScaler.linear(clampedScale);
 
-                // Ensure we reset ResponsiveHelper's cached size when app rebuilds
                 ResponsiveHelper.resetCachedSize();
 
                 return MediaQuery(

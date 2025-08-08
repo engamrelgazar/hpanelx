@@ -2,48 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hpanelx/src/core/utils/responsive_helper.dart';
 
-/// A class that provides theming resources for the application
 class AppTheme {
-  // Primary colors
   static const Color primaryColor = Color(0xFF6C63FF);
   static const Color secondaryColor = Color(0xFF4CAF50);
   static const Color accentColor = Color(0xFFFFA726);
 
-  // Status colors
   static const Color successColor = Color(0xFF66BB6A);
   static const Color errorColor = Color(0xFFEF5350);
   static const Color warningColor = Color(0xFFFFCA28);
   static const Color infoColor = Color(0xFF29B6F6);
 
-  // Neutral colors
   static const Color darkColor = Color(0xFF2D3436);
   static const Color lightGrey = Color(0xFFF5F5F5);
   static const Color grey = Color(0xFFE0E0E0);
   static const Color darkGrey = Color(0xFF9E9E9E);
 
-  // Text colors
   static const Color textPrimary = Color(0xFF212121);
   static const Color textSecondary = Color(0xFF757575);
   static const Color textDisabled = Color(0xFFBDBDBD);
 
-  // Border radius values
   static const double borderRadiusSmall = 4.0;
   static const double borderRadiusMedium = 8.0;
   static const double borderRadiusLarge = 12.0;
   static const double borderRadiusXLarge = 16.0;
 
-  // Elevation values
   static const double elevationNone = 0.0;
   static const double elevationSmall = 2.0;
   static const double elevationMedium = 4.0;
   static const double elevationLarge = 8.0;
 
-  // Animation durations
   static const Duration animationShort = Duration(milliseconds: 150);
   static const Duration animationMedium = Duration(milliseconds: 300);
   static const Duration animationLong = Duration(milliseconds: 500);
 
-  /// Returns the light theme for the application
   static ThemeData get lightTheme {
     return ThemeData(
       useMaterial3: true,
@@ -159,7 +150,6 @@ class AppTheme {
     );
   }
 
-  /// Returns the dark theme for the application
   static ThemeData get darkTheme {
     return ThemeData(
       useMaterial3: true,
@@ -275,7 +265,6 @@ class AppTheme {
     );
   }
 
-  /// Generate responsive text theme
   static TextTheme _getTextTheme({bool isDark = false}) {
     final Color textColor = isDark ? Colors.white : textPrimary;
     final Color secondaryTextColor =
@@ -360,7 +349,6 @@ class AppTheme {
     );
   }
 
-  /// Get responsive text style based on the device size
   static TextStyle getResponsiveTextStyle(
       BuildContext context, TextStyle baseStyle) {
     final double fontSizeMultiplier = ResponsiveHelper.isMobile(context)
@@ -374,7 +362,6 @@ class AppTheme {
     );
   }
 
-  /// Configure system UI settings
   static void setupSystemUI() {
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(

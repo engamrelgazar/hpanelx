@@ -75,7 +75,6 @@ class PaymentMethodModel extends Equatable {
     );
   }
 
-  // Helper getters for UI
   String get status {
     if (isSuspended) return 'suspended';
     if (isExpired) return 'expired';

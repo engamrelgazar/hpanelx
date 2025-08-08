@@ -45,7 +45,6 @@ class DomainsBloc extends Bloc<DomainsEvent, DomainsState> {
     List<DomainAvailabilityModel>? availabilityResults;
     String? availabilityError;
 
-    // Preserve current availability state
     if (currentState is DomainsLoaded) {
       availabilityStatus = currentState.availabilityStatus;
       availabilityResults = currentState.availabilityResults;
@@ -100,7 +99,6 @@ class DomainsBloc extends Bloc<DomainsEvent, DomainsState> {
   ) async {
     final currentState = state;
 
-    // Update availability status to loading while preserving domain data
     if (currentState is DomainsLoaded) {
       emit(currentState.copyWith(
         availabilityStatus: DomainAvailabilityStatus.loading,

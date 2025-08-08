@@ -3,19 +3,14 @@ import 'package:hpanelx/src/core/api/api_constants.dart';
 import 'package:hpanelx/src/modules/vms/data/models/vm_model.dart';
 
 abstract class VmRemoteDataSource {
-  /// Get all virtual machines
   Future<List<VmModel>> getVirtualMachines();
 
-  /// Get a specific virtual machine by ID
   Future<VmModel> getVirtualMachineById(int id);
 
-  /// Reboot a specific virtual machine
   Future<dynamic> rebootVirtualMachine(int id);
 
-  /// Shutdown a specific virtual machine
   Future<dynamic> shutdownVirtualMachine(int id);
 
-  /// Start a specific virtual machine
   Future<dynamic> startVirtualMachine(int id);
 }
 

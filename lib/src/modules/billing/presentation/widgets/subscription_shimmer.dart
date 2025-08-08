@@ -9,26 +9,21 @@ class SubscriptionShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double padding =
-        isTablet
-            ? ResponsiveHelper.w(20, context)
-            : ResponsiveHelper.w(16, context);
-    final double titleHeight =
-        isTablet
-            ? ResponsiveHelper.h(24, context)
-            : ResponsiveHelper.h(20, context);
-    final double lineHeight =
-        isTablet
-            ? ResponsiveHelper.h(16, context)
-            : ResponsiveHelper.h(14, context);
-    final double lineWidth =
-        isTablet
-            ? ResponsiveHelper.w(120, context)
-            : ResponsiveHelper.w(100, context);
-    final double statusWidth =
-        isTablet
-            ? ResponsiveHelper.w(80, context)
-            : ResponsiveHelper.w(70, context);
+    final double padding = isTablet
+        ? ResponsiveHelper.w(20, context)
+        : ResponsiveHelper.w(16, context);
+    final double titleHeight = isTablet
+        ? ResponsiveHelper.h(24, context)
+        : ResponsiveHelper.h(20, context);
+    final double lineHeight = isTablet
+        ? ResponsiveHelper.h(16, context)
+        : ResponsiveHelper.h(14, context);
+    final double lineWidth = isTablet
+        ? ResponsiveHelper.w(120, context)
+        : ResponsiveHelper.w(100, context);
+    final double statusWidth = isTablet
+        ? ResponsiveHelper.w(80, context)
+        : ResponsiveHelper.w(70, context);
 
     return Card(
       elevation: 2,
@@ -44,7 +39,6 @@ class SubscriptionShimmer extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Service name and status row
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -71,16 +65,10 @@ class SubscriptionShimmer extends StatelessWidget {
                 ],
               ),
               SizedBox(height: ResponsiveHelper.h(16, context)),
-              
-              // Price and billing period row
               _buildShimmerLine(context, lineWidth * 1.4, lineHeight),
               SizedBox(height: ResponsiveHelper.h(8, context)),
-              
-              // Auto-renewal status
               _buildShimmerLine(context, lineWidth * 1.6, lineHeight),
               SizedBox(height: ResponsiveHelper.h(8, context)),
-              
-              // Next billing or expiry date
               _buildShimmerLine(context, lineWidth * 1.2, lineHeight),
             ],
           ),

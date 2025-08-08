@@ -1,4 +1,3 @@
-// Export the GetIt instance
 export 'package:get_it/get_it.dart';
 export 'injection_container.dart' show sl;
 
@@ -16,7 +15,6 @@ import 'package:hpanelx/src/modules/startup/data/repositories/auth_repository_im
 import 'package:hpanelx/src/modules/startup/data/datasources/auth_local_datasource.dart';
 import 'package:hpanelx/src/modules/startup/presentation/bloc/startup_bloc.dart';
 
-// Home module imports
 import 'package:hpanelx/src/modules/home/data/datasources/home_remote_datasource.dart';
 import 'package:hpanelx/src/modules/home/data/repositories/home_repository_impl.dart';
 import 'package:hpanelx/src/modules/home/domain/repositories/home_repository.dart';
@@ -24,7 +22,6 @@ import 'package:hpanelx/src/modules/home/domain/usecases/get_domains_usecase.dar
 import 'package:hpanelx/src/modules/home/domain/usecases/get_servers_usecase.dart';
 import 'package:hpanelx/src/modules/home/presentation/bloc/home_bloc.dart';
 
-// Domains module imports
 import 'package:hpanelx/src/modules/domains/data/repositories/domain_repository_impl.dart';
 import 'package:hpanelx/src/modules/domains/domain/repositories/domain_repository.dart';
 import 'package:hpanelx/src/modules/domains/domain/usecases/get_domains_usecase.dart'
@@ -33,7 +30,6 @@ import 'package:hpanelx/src/modules/domains/domain/usecases/check_domain_availab
 import 'package:hpanelx/src/modules/domains/domain/usecases/get_whois_usecase.dart';
 import 'package:hpanelx/src/modules/domains/presentation/bloc/domains_bloc.dart';
 
-// Billing module imports
 import 'package:hpanelx/src/modules/billing/data/datasources/billing_remote_datasource.dart';
 import 'package:hpanelx/src/modules/billing/data/repositories/billing_repository_impl.dart';
 import 'package:hpanelx/src/modules/billing/domain/repositories/billing_repository.dart';
@@ -46,7 +42,6 @@ import 'package:hpanelx/src/modules/billing/presentation/cubit/payment_methods_c
 
 import 'package:hpanelx/src/core/api/api_client.dart';
 
-// VMs module imports
 import 'package:hpanelx/src/modules/vms/data/datasources/vm_remote_datasource.dart';
 import 'package:hpanelx/src/modules/vms/data/repositories/vm_repository_impl.dart';
 import 'package:hpanelx/src/modules/vms/domain/repositories/vm_repository.dart';
@@ -55,41 +50,32 @@ import 'package:hpanelx/src/modules/vms/domain/usecases/get_virtual_machine_by_i
 import 'package:hpanelx/src/modules/vms/domain/usecases/vm_action_usecases.dart';
 import 'package:hpanelx/src/modules/vms/presentation/cubit/vms_cubit.dart';
 
-/// The Service Locator instance
 final sl = GetIt.instance;
 
-/// Initialize all dependencies
 Future<void> init() async {
-  // External
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerSingleton<SharedPreferences>(sharedPreferences);
 
   sl.registerSingleton<Dio>(Dio());
 
-  // Core
   sl.registerSingleton<AppRouter>(AppRouterImpl());
   sl.registerSingleton<ApiClient>(ApiClient(sharedPreferences: sl()));
 
-  // Theme
   sl.registerSingleton<ThemeCubit>(ThemeCubit(sl()));
 
-  // Data sources
   sl.registerSingleton<AuthLocalDataSource>(AuthLocalDataSourceImpl(sl()));
   sl.registerSingleton<HomeRemoteDataSource>(
     HomeRemoteDataSourceImpl(apiClient: sl()),
   );
 
-  // Billing data source
   sl.registerSingleton<BillingRemoteDataSource>(
     BillingRemoteDataSourceImpl(apiClient: sl()),
   );
 
-  // VMs data source
   sl.registerSingleton<VmRemoteDataSource>(
     VmRemoteDataSourceImpl(apiClient: sl()),
   );
 
-  // Repositories
   sl.registerSingleton<AuthRepository>(
     AuthRepositoryImpl(
       localDataSource: sl(),
@@ -103,15 +89,12 @@ Future<void> init() async {
 
   sl.registerSingleton<DomainRepository>(DomainRepositoryImpl(apiClient: sl()));
 
-  // Billing repository
   sl.registerSingleton<BillingRepository>(
     BillingRepositoryImpl(remoteDataSource: sl()),
   );
 
-  // VMs repository
   sl.registerSingleton<VmRepository>(VmRepositoryImpl(remoteDataSource: sl()));
 
-  // Use cases
   sl.registerSingleton<CheckTokenUseCase>(CheckTokenUseCase(sl()));
   sl.registerSingleton<SaveTokenUseCase>(SaveTokenUseCase(sl()));
   sl.registerSingleton<RemoveTokenUseCase>(RemoveTokenUseCase(sl()));
@@ -128,10 +111,8 @@ Future<void> init() async {
     CheckDomainAvailabilityUseCase(repository: sl()),
   );
 
-  // Register the WHOIS use case and cubit
   sl.registerSingleton<GetWhoisUseCase>(GetWhoisUseCase(repository: sl()));
 
-  // Billing use cases
   sl.registerSingleton<GetSubscriptionsUseCase>(
     GetSubscriptionsUseCase(repository: sl()),
   );
@@ -148,7 +129,6 @@ Future<void> init() async {
     SetDefaultPaymentMethodUseCase(repository: sl()),
   );
 
-  // VMs use cases
   sl.registerSingleton<GetVirtualMachinesUseCase>(
     GetVirtualMachinesUseCase(repository: sl()),
   );
@@ -169,7 +149,6 @@ Future<void> init() async {
     StartVirtualMachineUseCase(repository: sl()),
   );
 
-  // BLoCs
   sl.registerFactory<StartupBloc>(
     () => StartupBloc(
       checkTokenUseCase: sl(),
@@ -192,7 +171,6 @@ Future<void> init() async {
         checkDomainAvailabilityUseCase: sl(),
       ));
 
-  // Billing cubits
   sl.registerFactory<BillingCubit>(
     () => BillingCubit(getSubscriptionsUseCase: sl()),
   );
@@ -205,7 +183,6 @@ Future<void> init() async {
     ),
   );
 
-  // VMs cubit
   sl.registerFactory<VmsCubit>(
     () => VmsCubit(
       getVirtualMachinesUseCase: sl(),

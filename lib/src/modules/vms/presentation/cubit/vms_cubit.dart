@@ -5,7 +5,6 @@ import 'package:hpanelx/src/modules/vms/domain/usecases/get_virtual_machines_use
 import 'package:hpanelx/src/modules/vms/domain/usecases/get_virtual_machine_by_id_usecase.dart';
 import 'package:hpanelx/src/modules/vms/domain/usecases/vm_action_usecases.dart';
 
-// States
 abstract class VmsState extends Equatable {
   const VmsState();
 
@@ -64,7 +63,6 @@ class VmsError extends VmsState {
   List<Object?> get props => [message];
 }
 
-// Cubit
 class VmsCubit extends Cubit<VmsState> {
   final GetVirtualMachinesUseCase getVirtualMachinesUseCase;
   final GetVirtualMachineByIdUseCase getVirtualMachineByIdUseCase;
@@ -108,7 +106,6 @@ class VmsCubit extends Cubit<VmsState> {
     try {
       await rebootVirtualMachineUseCase.execute(id);
       emit(VmActionSuccess(id, 'reboot'));
-      // Refresh VM details
       getVirtualMachineById(id);
     } catch (e) {
       emit(VmsError(e.toString()));
@@ -121,7 +118,6 @@ class VmsCubit extends Cubit<VmsState> {
     try {
       await shutdownVirtualMachineUseCase.execute(id);
       emit(VmActionSuccess(id, 'shutdown'));
-      // Refresh VM details
       getVirtualMachineById(id);
     } catch (e) {
       emit(VmsError(e.toString()));
@@ -134,7 +130,6 @@ class VmsCubit extends Cubit<VmsState> {
     try {
       await startVirtualMachineUseCase.execute(id);
       emit(VmActionSuccess(id, 'start'));
-      // Refresh VM details
       getVirtualMachineById(id);
     } catch (e) {
       emit(VmsError(e.toString()));

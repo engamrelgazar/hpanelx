@@ -5,12 +5,8 @@ import 'package:hpanelx/src/modules/home/data/models/domain_model.dart';
 import 'package:hpanelx/src/modules/home/data/models/server_model.dart';
 
 abstract class HomeRemoteDataSource {
-  /// Fetches all servers from the API
-  /// Throws a [ServerException] for all error codes
   Future<List<ServerModel>> getServers();
 
-  /// Fetches all domains from the API
-  /// Throws a [ServerException] for all error codes
   Future<List<DomainModel>> getDomains();
 }
 
@@ -29,7 +25,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
         return serverData.map((json) => ServerModel.fromJson(json)).toList();
       } else {
         throw ServerException(
-        'Failed to load servers: No data returned',
+          'Failed to load servers: No data returned',
         );
       }
     } catch (e) {
@@ -47,11 +43,11 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
         return domainData.map((json) => DomainModel.fromJson(json)).toList();
       } else {
         throw ServerException(
-       'Failed to load domains: No data returned',
+          'Failed to load domains: No data returned',
         );
       }
     } catch (e) {
-      throw ServerException( 'Failed to load domains: $e');
+      throw ServerException('Failed to load domains: $e');
     }
   }
 }

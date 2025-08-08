@@ -5,7 +5,6 @@ import 'package:hpanelx/src/modules/billing/domain/usecases/get_payment_methods_
 import 'package:hpanelx/src/modules/billing/domain/usecases/delete_payment_method_usecase.dart';
 import 'package:hpanelx/src/modules/billing/domain/usecases/set_default_payment_method_usecase.dart';
 
-// States
 abstract class PaymentMethodsState extends Equatable {
   const PaymentMethodsState();
 
@@ -71,7 +70,6 @@ class PaymentMethodDefaultSet extends PaymentMethodsState {
   List<Object?> get props => [paymentMethodId];
 }
 
-// Cubit
 class PaymentMethodsCubit extends Cubit<PaymentMethodsState> {
   final GetPaymentMethodsUseCase getPaymentMethodsUseCase;
   final DeletePaymentMethodUseCase deletePaymentMethodUseCase;
@@ -101,7 +99,6 @@ class PaymentMethodsCubit extends Cubit<PaymentMethodsState> {
       await deletePaymentMethodUseCase.execute(paymentMethodId);
       emit(PaymentMethodDeleted(paymentMethodId));
 
-      // Reload payment methods after deletion
       await getPaymentMethods();
     } catch (e) {
       emit(PaymentMethodsError(e.toString()));
@@ -115,7 +112,6 @@ class PaymentMethodsCubit extends Cubit<PaymentMethodsState> {
       await setDefaultPaymentMethodUseCase.execute(paymentMethodId);
       emit(PaymentMethodDefaultSet(paymentMethodId));
 
-      // Reload payment methods after setting default
       await getPaymentMethods();
     } catch (e) {
       emit(PaymentMethodsError(e.toString()));

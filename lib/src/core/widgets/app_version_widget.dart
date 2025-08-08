@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
-/// A widget that displays the application version information
+
 class AppVersionWidget extends StatelessWidget {
-  /// The text color
   final Color? color;
 
-  /// The text style
   final TextStyle? style;
 
-  /// Whether to include the build number
   final bool includeBuildNumber;
 
-  /// Creates an app version widget
   const AppVersionWidget({
     super.key,
     this.color,

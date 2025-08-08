@@ -41,7 +41,6 @@ class VmModel {
   });
 
   factory VmModel.fromJson(Map<String, dynamic> json) {
-    // Parse IPv4 addresses
     List<IpModel> ipv4List = [];
     if (json['ipv4'] != null) {
       for (var ip in json['ipv4']) {
@@ -49,7 +48,6 @@ class VmModel {
       }
     }
 
-    // Parse IPv6 addresses
     List<IpModel> ipv6List = [];
     if (json['ipv6'] != null) {
       for (var ip in json['ipv6']) {
@@ -73,10 +71,9 @@ class VmModel {
       ns2: json['ns2'] ?? '',
       ipv4: ipv4List,
       ipv6: ipv6List,
-      template:
-          json['template'] != null
-              ? TemplateModel.fromJson(json['template'])
-              : TemplateModel(id: 0, name: '', description: ''),
+      template: json['template'] != null
+          ? TemplateModel.fromJson(json['template'])
+          : TemplateModel(id: 0, name: '', description: ''),
       createdAt: json['created_at'] ?? '',
     );
   }

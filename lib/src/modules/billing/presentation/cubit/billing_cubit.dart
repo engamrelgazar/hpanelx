@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 import 'package:hpanelx/src/modules/billing/data/models/subscription_model.dart';
 import 'package:hpanelx/src/modules/billing/domain/usecases/get_subscriptions_usecase.dart';
 
-// States
 abstract class BillingState extends Equatable {
   const BillingState();
 
@@ -33,12 +32,11 @@ class BillingError extends BillingState {
   List<Object?> get props => [message];
 }
 
-// Cubit
 class BillingCubit extends Cubit<BillingState> {
   final GetSubscriptionsUseCase getSubscriptionsUseCase;
 
   BillingCubit({required this.getSubscriptionsUseCase})
-    : super(BillingInitial());
+      : super(BillingInitial());
 
   Future<void> getSubscriptions() async {
     emit(BillingLoading());

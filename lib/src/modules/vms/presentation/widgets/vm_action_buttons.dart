@@ -29,7 +29,6 @@ class VmActionButtons extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        // Start button
         _buildActionButton(
           icon: Icons.play_arrow,
           label: 'Start',
@@ -41,7 +40,6 @@ class VmActionButtons extends StatelessWidget {
           context: context,
         ),
         SizedBox(width: ResponsiveHelper.w(16, context)),
-        // Reboot button
         _buildActionButton(
           icon: Icons.refresh,
           label: 'Reboot',
@@ -53,7 +51,6 @@ class VmActionButtons extends StatelessWidget {
           context: context,
         ),
         SizedBox(width: ResponsiveHelper.w(16, context)),
-        // Shutdown button
         _buildActionButton(
           icon: Icons.power_settings_new,
           label: 'Shutdown',
@@ -90,33 +87,30 @@ class VmActionButtons extends StatelessWidget {
             padding: EdgeInsets.all(ResponsiveHelper.w(16, context)),
             shape: const CircleBorder(),
           ),
-          child:
-              isLoading
-                  ? SizedBox(
-                    width: ResponsiveHelper.w(24, context),
-                    height: ResponsiveHelper.h(24, context),
-                    child: CircularProgressIndicator(
-                      color: buttonColor,
-                      strokeWidth: 2,
-                    ),
-                  )
-                  : Icon(
-                    icon,
-                    size:
-                        isTablet
-                            ? ResponsiveHelper.sp(28, context)
-                            : ResponsiveHelper.sp(24, context),
+          child: isLoading
+              ? SizedBox(
+                  width: ResponsiveHelper.w(24, context),
+                  height: ResponsiveHelper.h(24, context),
+                  child: CircularProgressIndicator(
+                    color: buttonColor,
+                    strokeWidth: 2,
                   ),
+                )
+              : Icon(
+                  icon,
+                  size: isTablet
+                      ? ResponsiveHelper.sp(28, context)
+                      : ResponsiveHelper.sp(24, context),
+                ),
         ),
         SizedBox(height: ResponsiveHelper.h(4, context)),
         Text(
           label,
           style: TextStyle(
             color: isActive ? buttonColor : Colors.grey,
-            fontSize:
-                isTablet
-                    ? ResponsiveHelper.sp(14, context)
-                    : ResponsiveHelper.sp(12, context),
+            fontSize: isTablet
+                ? ResponsiveHelper.sp(14, context)
+                : ResponsiveHelper.sp(12, context),
             fontWeight: FontWeight.w500,
           ),
         ),

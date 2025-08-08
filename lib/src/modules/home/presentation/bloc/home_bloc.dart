@@ -28,7 +28,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   ) async {
     emit(HomeLoading());
 
-    // Get token first
     final tokenResult = await checkTokenUseCase();
 
     await tokenResult.fold(
@@ -41,11 +40,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           return;
         }
 
-        // Load servers and domains in parallel
         final serversResult = await getServersUseCase();
         final domainsResult = await getDomainsUseCase();
 
-        // Check if both succeeded
         if (serversResult.isRight() && domainsResult.isRight()) {
           final servers = serversResult.getOrElse(() => []);
           final domains = domainsResult.getOrElse(() => []);
@@ -59,7 +56,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             ),
           );
         } else {
-          // Extract error message from either result
           String errorMessage = '';
           serversResult.fold(
             (failure) => errorMessage = 'Server error: ${failure.message}',

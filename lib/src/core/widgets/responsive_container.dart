@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hpanelx/src/core/utils/responsive_helper.dart';
 
-/// A container that adapts its constraints based on screen size.
 class ResponsiveContainer extends StatelessWidget {
   final Widget child;
   final double? mobileWidth;
@@ -42,7 +41,6 @@ class ResponsiveContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return ResponsiveBuilder(
       builder: (context, isMobile, isTablet, isDesktop) {
-        // Determine width
         double? width;
         if (isDesktop && desktopWidth != null) {
           width = desktopWidth;
@@ -52,7 +50,6 @@ class ResponsiveContainer extends StatelessWidget {
           width = mobileWidth;
         }
 
-        // Determine height
         double? height;
         if (isDesktop && desktopHeight != null) {
           height = desktopHeight;
@@ -62,7 +59,6 @@ class ResponsiveContainer extends StatelessWidget {
           height = mobileHeight;
         }
 
-        // Determine constraints
         BoxConstraints? constraints;
         if (isDesktop && desktopConstraints != null) {
           constraints = desktopConstraints;
